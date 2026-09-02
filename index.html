@@ -412,6 +412,504 @@
   .ac-counsel-history-scroll{height:220px !important;max-height:220px !important}
 }
 
+
+.counsel-score-latest{padding:14px;border:1px solid #eceef2;border-radius:13px;background:#fffafa}
+.counsel-score-head{display:flex;justify-content:space-between;gap:10px}
+.counsel-score-name{font-size:14px;font-weight:900}
+.counsel-score-total{font-size:22px;font-weight:950;color:#ef4444}
+.counsel-score-subjects{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.counsel-score-subject{padding:9px 5px;text-align:center;background:#f8fafc;border-radius:9px}
+.counsel-score-subject span{display:block;color:#64748b;font-size:8px}
+.counsel-score-subject strong{display:block;margin-top:3px;font-size:15px}
+.counsel-score-rank{margin-top:9px;font-size:11px;font-weight:900;color:#1d4ed8}
+.counsel-score-ai{margin-top:12px;padding:14px 16px;background:#fff1f2;border:1px solid #fee2e2;border-radius:12px;font-size:11px;line-height:1.75;color:#5f3b39}.counsel-score-ai strong{font-size:12px;color:#7f1d1d}.counsel-score-ai-text{margin-top:6px;white-space:pre-line}
+.counsel-score-trend{margin-top:12px;border-top:1px solid #eef2f7;padding-top:10px;overflow:auto}
+.counsel-score-trend svg{width:100%;min-width:520px;height:210px}
+.counsel-history-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.counsel-history-panel{padding:15px;border:1px solid #e5e7eb;border-radius:14px;background:#fff}
+.counsel-history-scroll{max-height:340px;overflow:auto;padding-right:4px}
+.counsel-history-card{padding:10px 0;border-bottom:1px solid #eef2f7}
+.counsel-history-card:last-child{border-bottom:0}
+.counsel-history-top{display:flex;justify-content:space-between;gap:8px;font-size:11px;font-weight:900}
+.counsel-history-date{color:#94a3b8;font-weight:700}
+.counsel-history-text{margin-top:5px;font-size:12px;line-height:1.55;white-space:pre-wrap}
+.counsel-history-follow{margin-top:5px;color:#64748b;font-size:10px;line-height:1.45}
+.counsel-entry-card{margin-top:14px;padding:15px;border:1px solid #fecaca;border-radius:14px;background:#fffafa}
+.counsel-entry-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:760px){
+  .counsel-info-grid{grid-template-columns:1fr 1fr}
+  .counsel-history-grid,.counsel-entry-grid{grid-template-columns:1fr}
+  .counsel-score-subjects{grid-template-columns:1fr 1fr}
+}
+
+
+/* ===== 상담관리 > 이전 시험 성적 스크롤 ===== */
+.counsel-score-history{
+  margin-top:12px;
+  border-top:1px solid #eef2f7;
+  padding-top:12px;
+}
+.counsel-score-history-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+  font-size:12px;
+  font-weight:900;
+}
+.counsel-score-history-title span{
+  color:#94a3b8;
+  font-size:10px;
+  font-weight:700;
+}
+.counsel-score-history-scroll{
+  max-height:300px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:5px;
+  scrollbar-width:thin;
+  scrollbar-color:#cfd4dc transparent;
+}
+.counsel-score-history-scroll::-webkit-scrollbar{
+  width:7px;
+}
+.counsel-score-history-scroll::-webkit-scrollbar-thumb{
+  background:#cfd4dc;
+  border-radius:999px;
+}
+.counsel-score-history-item{
+  padding:11px 12px;
+  margin-bottom:7px;
+  border:1px solid #eef2f7;
+  border-radius:11px;
+  background:#f8fafc;
+}
+.counsel-score-history-item:last-child{
+  margin-bottom:0;
+}
+.counsel-score-history-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+}
+.counsel-score-history-name{
+  font-size:12px;
+  font-weight:900;
+}
+.counsel-score-history-date{
+  margin-top:2px;
+  color:#94a3b8;
+  font-size:9px;
+}
+.counsel-score-history-total{
+  color:#ef4444;
+  font-size:15px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.counsel-score-history-subjects{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+  margin-top:8px;
+}
+.counsel-score-history-subject{
+  text-align:center;
+  padding:7px 4px;
+  border-radius:8px;
+  background:#fff;
+}
+.counsel-score-history-subject span{
+  display:block;
+  color:#94a3b8;
+  font-size:8px;
+}
+.counsel-score-history-subject strong{
+  display:block;
+  margin-top:2px;
+  font-size:11px;
+}
+.counsel-score-history-rank{
+  margin-top:7px;
+  color:#1d4ed8;
+  font-size:10px;
+  font-weight:900;
+}
+@media(max-width:760px){
+  .counsel-score-history-subjects{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+
+/* ===== 상담기록 작성구분 / 수정 ===== */
+.counsel-history-actions{display:flex;gap:6px;margin-top:8px}
+.counsel-history-edit-btn{
+  border:1px solid #dfe3e8;
+  background:#fff;
+  border-radius:7px;
+  padding:5px 9px;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+.counsel-role-select{width:100%}
+.counsel-edit-note{margin-top:5px;color:#94a3b8;font-size:10px}
+
+
+/* ===== 상담관리 > 상세 성적 분석 ===== */
+.counsel-score-dashboard{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:10px;
+}
+.counsel-score-metric{
+  padding:12px 10px;
+  border:1px solid #e5e7eb;
+  border-radius:11px;
+  background:#fff;
+  text-align:center;
+}
+.counsel-score-metric span{
+  display:block;
+  color:#94a3b8;
+  font-size:9px;
+  margin-bottom:4px;
+}
+.counsel-score-metric strong{
+  display:block;
+  font-size:17px;
+  font-weight:950;
+}
+.counsel-score-metric small{
+  display:block;
+  margin-top:3px;
+  font-size:9px;
+  color:#64748b;
+}
+.counsel-subject-analysis{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+.counsel-subject-analysis-card{
+  padding:10px 11px;
+  border:1px solid #eef2f7;
+  border-radius:10px;
+  background:#fff;
+}
+.counsel-subject-analysis-head{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+  font-size:11px;
+  font-weight:900;
+}
+.counsel-subject-analysis-track{
+  height:8px;
+  margin-top:7px;
+  border-radius:999px;
+  background:#eef2f7;
+  overflow:hidden;
+}
+.counsel-subject-analysis-bar{
+  height:100%;
+  border-radius:999px;
+  background:#ef4444;
+}
+.counsel-score-insight{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.counsel-score-insight-box{
+  padding:10px 11px;
+  border-radius:10px;
+  background:#f8fafc;
+  border:1px solid #eef2f7;
+  font-size:10px;
+  line-height:1.5;
+}
+.counsel-score-insight-box strong{
+  display:block;
+  margin-bottom:3px;
+  font-size:10px;
+}
+.counsel-score-trend{
+  margin-top:14px;
+  border:1px solid #eef2f7;
+  border-radius:12px;
+  padding:10px;
+  background:#fff;
+  overflow:auto;
+}
+.counsel-score-trend svg{
+  width:100%;
+  min-width:620px;
+  height:250px;
+}
+@media(max-width:760px){
+  .counsel-score-dashboard{grid-template-columns:1fr 1fr}
+  .counsel-subject-analysis{grid-template-columns:1fr}
+  .counsel-score-insight{grid-template-columns:1fr}
+}
+
+
+
+/* ===== 시험지 기반 AI 취약영역 분석 ===== */
+.exam-ai-panel{margin-top:14px;padding:15px;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff}
+.exam-ai-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.exam-ai-title{font-size:14px;font-weight:950}.exam-ai-desc{margin-top:4px;color:#64748b;font-size:10px;line-height:1.5}
+.exam-ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.exam-ai-grid .field{margin-bottom:0}
+.exam-ai-file{width:100%;background:#fff}.exam-ai-help{margin-top:5px;color:#94a3b8;font-size:9px;line-height:1.45}
+.exam-ai-run{width:100%;margin-top:10px;min-height:42px}.exam-ai-run:disabled{opacity:.55;cursor:not-allowed}
+.exam-ai-result{margin-top:12px}.exam-ai-summary{padding:12px;border-radius:11px;background:#fff;border:1px solid #e5e7eb;font-size:12px;line-height:1.65}
+.exam-ai-priority{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.exam-ai-priority-card{padding:11px;border-radius:11px;background:#fff;border:1px solid #e5e7eb}
+.exam-ai-priority-card span{display:block;font-size:9px;color:#94a3b8;margin-bottom:4px}.exam-ai-priority-card strong{font-size:12px}.exam-ai-priority-card div{margin-top:5px;font-size:10px;color:#64748b;line-height:1.45}
+.exam-ai-question-list{margin-top:10px;border:1px solid #e5e7eb;border-radius:11px;overflow:hidden;background:#fff}
+.exam-ai-question-row{display:grid;grid-template-columns:52px 105px 1fr 92px;gap:8px;padding:9px 10px;border-bottom:1px solid #eef2f7;align-items:center;font-size:10px}.exam-ai-question-row:last-child{border-bottom:0}.exam-ai-question-row.head{background:#f8fafc;font-weight:900;color:#64748b}.exam-ai-question-row .qno{font-weight:950;color:#dc2626}.exam-ai-badge{display:inline-block;padding:3px 7px;border-radius:999px;background:#fff1f2;color:#be123c;font-size:9px;font-weight:900}
+.exam-ai-plan{margin-top:10px;padding:12px;border-radius:11px;background:#fff7ed;border:1px solid #fed7aa;font-size:11px;line-height:1.65}
+.exam-ai-loading{padding:18px;text-align:center;color:#64748b;font-size:11px}.exam-ai-error{padding:11px;border-radius:10px;background:#fff1f2;color:#be123c;font-size:11px;line-height:1.55}
+@media(max-width:760px){.exam-ai-grid,.exam-ai-priority{grid-template-columns:1fr}.exam-ai-question-row{grid-template-columns:42px 80px 1fr}.exam-ai-question-row>*:last-child{display:none}}
+
+
+/* ===== 시험자료 / OMR 일괄 업로드 ===== */
+.exam-upload-card{
+  margin-bottom:16px;
+  padding:15px;
+  border:1px solid #dbeafe;
+  border-radius:14px;
+  background:#f8fbff;
+}
+.exam-upload-title{
+  font-size:14px;
+  font-weight:950;
+}
+.exam-upload-desc{
+  margin-top:4px;
+  color:#64748b;
+  font-size:10px;
+  line-height:1.55;
+}
+.exam-upload-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+.exam-upload-files{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:10px;
+}
+.exam-upload-file-box{
+  padding:11px;
+  border:1px solid #e5e7eb;
+  border-radius:11px;
+  background:#fff;
+}
+.exam-upload-file-box label{
+  display:block;
+  margin-bottom:6px;
+  font-size:11px;
+  font-weight:900;
+}
+.exam-upload-file-box input{
+  width:100%;
+  padding:7px;
+  background:#fff;
+}
+.exam-upload-help{
+  margin-top:5px;
+  color:#94a3b8;
+  font-size:9px;
+  line-height:1.45;
+}
+.exam-upload-btn{
+  width:100%;
+  min-height:42px;
+  margin-top:10px;
+}
+.exam-upload-result{
+  margin-top:12px;
+}
+.exam-upload-ok{
+  padding:11px;
+  border:1px solid #bbf7d0;
+  border-radius:10px;
+  background:#f0fdf4;
+  color:#166534;
+  font-size:11px;
+  line-height:1.6;
+}
+.exam-upload-error{
+  padding:11px;
+  border:1px solid #fecaca;
+  border-radius:10px;
+  background:#fff1f2;
+  color:#be123c;
+  font-size:11px;
+  line-height:1.55;
+}
+.omr-preview{
+  margin-top:10px;
+  border:1px solid #e5e7eb;
+  border-radius:11px;
+  overflow:hidden;
+  background:#fff;
+}
+.omr-preview-head{
+  padding:9px 10px;
+  background:#f8fafc;
+  font-size:10px;
+  font-weight:900;
+}
+.omr-preview-scroll{
+  overflow:auto;
+  max-height:240px;
+}
+.omr-preview table{
+  width:100%;
+  min-width:900px;
+  border-collapse:collapse;
+}
+.omr-preview th,.omr-preview td{
+  padding:7px 8px;
+  border-bottom:1px solid #eef2f7;
+  font-size:9px;
+  white-space:nowrap;
+}
+.omr-detect{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:8px;
+}
+.omr-detect span{
+  display:inline-block;
+  padding:4px 7px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:#4338ca;
+  font-size:9px;
+  font-weight:900;
+}
+@media(max-width:760px){
+  .exam-upload-grid,
+  .exam-upload-files{grid-template-columns:1fr}
+}
+
+
+/* ===== 성적관리 탭 ===== */
+#scoreAdmin .exam-upload-card{
+  margin-bottom:0;
+}
+#scoreAdmin .exam-upload-title{
+  font-size:15px;
+}
+#scoreAdmin .exam-upload-desc{
+  max-width:900px;
+}
+
+
+
+/* ===== 성적관리 > OMR 과목코드 관리 ===== */
+.subject-code-card{
+  margin-bottom:16px;padding:15px;border:1px solid #e5e7eb;border-radius:14px;background:#fff
+}
+.subject-code-title{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;font-weight:950}
+.subject-code-desc{margin-top:5px;color:#64748b;font-size:11px;line-height:1.6}
+.subject-code-toolbar{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-top:13px;margin-bottom:9px}
+.subject-code-status{font-size:10px;color:#64748b;text-align:right}
+.subject-code-table-wrap{max-height:390px;overflow:auto;border:1px solid #eef2f7;border-radius:11px}
+.subject-code-table{min-width:520px}
+.subject-code-table th{position:sticky;top:0;z-index:1;background:#fafafa}
+.subject-code-input{width:100%;min-width:100px}
+.subject-name-input{width:100%;min-width:180px}
+.subject-code-save{width:100%;margin-top:10px}
+.subject-code-delete{border:0;background:#fff1f2;color:#dc2626;border-radius:8px;padding:7px 10px;font-weight:900;cursor:pointer}
+.subject-code-delete:hover{background:#fee2e2}
+@media(max-width:560px){.subject-code-toolbar{align-items:flex-start;flex-direction:column}.subject-code-status{text-align:left}}
+
+.exam-upload-progress{
+  margin-top:10px;padding:10px;border-radius:10px;background:#f8fafc;border:1px solid #e5e7eb;font-size:11px
+}
+
+
+.answer-map-list{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.answer-map-row{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:8px;align-items:center;padding:8px;border:1px solid #e5e7eb;border-radius:9px;background:#fff}
+.answer-map-file{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.answer-map-select{width:100%;font-size:11px}
+@media(max-width:700px){.answer-map-row{grid-template-columns:1fr}}
+
+
+.counsel-ai-detail{margin-top:12px;padding:14px 16px;border:1px solid #fecaca;border-radius:12px;background:#fff7f7}
+.counsel-ai-detail-title{font-size:13px;font-weight:950;color:#7f1d1d;margin-bottom:10px}
+.counsel-ai-section{padding:10px 0;border-bottom:1px solid #fee2e2}
+.counsel-ai-section:last-child{border-bottom:0}
+.counsel-ai-section strong{display:block;font-size:12px;margin-bottom:5px;color:#7f1d1d}
+.counsel-ai-section div{font-size:11px;line-height:1.7;color:#5f3b39;white-space:pre-wrap}
+.counsel-ai-subject-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px}
+.counsel-ai-subject-card{padding:10px;border:1px solid #fee2e2;border-radius:10px;background:#fff}
+.counsel-ai-subject-card b{display:block;font-size:11px;margin-bottom:4px}
+.counsel-ai-subject-card span{font-size:10px;line-height:1.55;color:#6b4f4f}
+@media(max-width:700px){.counsel-ai-subject-grid{grid-template-columns:1fr}}
+
+
+
+
+/* ===== 상담관리 AI 분석 접기/펼치기 ===== */
+.counsel-collapse{
+  cursor:default;
+}
+.counsel-collapse > summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  font-weight:900;
+}
+.counsel-collapse > summary::-webkit-details-marker{
+  display:none;
+}
+.counsel-collapse > summary .collapse-label{
+  color:#94a3b8;
+  font-size:10px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.counsel-collapse > summary .collapse-label::after{
+  content:" ▼";
+}
+.counsel-collapse[open] > summary .collapse-label{
+  font-size:0;
+}
+.counsel-collapse[open] > summary .collapse-label::before{
+  content:"접기 ▲";
+  font-size:10px;
+}
+.counsel-collapse-body{
+  margin-top:12px;
+}
+.counsel-score-ai.counsel-collapse > summary{
+  color:#7f1d1d;
+  font-size:12px;
+}
+.counsel-ai-detail.counsel-collapse > summary{
+  margin:0;
+}
+
+
 </style>
 </head>
 <body>
@@ -1441,7 +1939,16 @@ function renderAssistantCounselHistory_(id,list){
   }).join("");
 }
 
+
+let currentAssistantCounselScoreData_=null;
+let currentAssistantCounselScoreIndex_=0;
+
 function loadAssistantCounselScore_(studentId){
+  const scoreBox=document.getElementById("acCwScore");
+  const wrongBox=document.getElementById("acCwWrongAnalysis");
+  if(scoreBox) scoreBox.innerHTML='<div class="empty">성적을 불러오는 중입니다.</div>';
+  if(wrongBox) wrongBox.innerHTML="";
+
   api("assistantCounselScore", {
     sessionToken:sessionToken,
     studentId:studentId
@@ -1450,76 +1957,414 @@ function loadAssistantCounselScore_(studentId){
        String(selectedAssistantCounselStudent.studentId)!==String(studentId)) return;
 
     if(!r || !r.success){
-      document.getElementById("acCwScore").innerHTML =
+      scoreBox.innerHTML =
         '<div class="empty">'+esc(r && r.message ? r.message : "성적을 불러오지 못했습니다.")+'</div>';
       return;
     }
+
     renderAssistantCounselScore_(r.score || null);
+
+    // 담임 상담관리와 동일하게 오답 기반 상세분석도 함께 호출
+    loadAssistantDetailedWrongAnalysis_(studentId);
+
   }).catch(function(err){
-    document.getElementById("acCwScore").innerHTML =
+    scoreBox.innerHTML =
       '<div class="empty">'+esc(err.message || "성적을 불러오지 못했습니다.")+'</div>';
   });
 }
 
 function renderAssistantCounselScore_(score){
-  const box = document.getElementById("acCwScore");
-  const all = score && Array.isArray(score.scores) ? score.scores : [];
-  if(!score || !score.success || !all.length){
-    box.innerHTML = '<div class="empty">등록된 시험성적이 없습니다.</div>';
+  currentAssistantCounselScoreData_=score;
+  currentAssistantCounselScoreIndex_=0;
+  renderAssistantCounselScoreExam_(0);
+}
+
+function selectAssistantCounselScoreExam_(index){
+  if(!currentAssistantCounselScoreData_)return;
+  const all=currentAssistantCounselScoreData_.scores||[];
+  if(index<0||index>=all.length)return;
+  currentAssistantCounselScoreIndex_=index;
+  renderAssistantCounselScoreExam_(index);
+
+  const box=document.getElementById("acCwScore");
+  if(box)box.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function renderAssistantCounselScoreExam_(index){
+  const box=document.getElementById("acCwScore");
+  const score=currentAssistantCounselScoreData_;
+  const allScores=(score&&Array.isArray(score.scores))?score.scores:[];
+
+  if(!score||!score.success||!allScores.length){
+    box.innerHTML="<div class='empty'>등록된 시험성적이 없습니다.</div>";
     return;
   }
 
-  const x = all[0] || {};
-  const subjectNames = score.subjects || {};
-  const subjects = [
-    {name:"국어", score:x.korean},
-    {name:"영어", score:x.english},
-    {name:subjectNames.major1 || "전공1", score:x.major1},
-    {name:subjectNames.major2 || "전공2", score:x.major2}
+  const current=allScores[index]||{};
+  const latest=(index===0)?(score.latestAnalysis||null):null;
+  const previous=allScores[index+1]||null;
+  const subjectNames=score.subjects||{};
+
+  const subjects=(latest&&latest.subjects)||[
+    {name:"국어",score:current.korean},
+    {name:"영어",score:current.english},
+    {name:subjectNames.major1||"전공1",score:current.major1},
+    {name:subjectNames.major2||"전공2",score:current.major2}
   ];
-  const total = Number(x.total);
-  const previous = all[1] || null;
-  const change = previous && isFinite(Number(previous.total)) && isFinite(total)
-    ? total - Number(previous.total) : null;
 
-  let out =
-    '<div class="ac-score-head">' +
-      '<div><strong>'+esc(x.examName || "최근 시험")+'</strong><div class="card-sub">'+esc(x.examDate || "")+'</div></div>' +
-      '<div class="ac-score-total">'+esc(isFinite(total) ? total : "-")+'<small> /400</small></div>' +
-    '</div>' +
-    '<div class="ac-score-metrics">' +
-      '<div><span>선택 시험 총점</span><strong>'+esc(isFinite(total) ? total : "-")+'</strong><small>/ 400점</small></div>' +
-      '<div><span>직렬 석차</span><strong>'+esc(x.rank ? x.rank+"위" : "-")+'</strong><small>'+esc(x.participants ? "총 "+x.participants+"명" : "응시인원 -")+'</small></div>' +
-      '<div><span>직전 시험 대비</span><strong>'+esc(change==null ? "-" : (change>0?"+":"")+change+"점")+'</strong><small>'+esc(previous ? previous.examName || "이전 시험" : "비교시험 없음")+'</small></div>' +
-      '<div><span>시험 순서</span><strong>'+esc(all.length+"회차")+'</strong><small>총 '+esc(all.length)+'회 등록</small></div>' +
-    '</div>' +
-    '<div class="ac-score-subjects">' +
-      subjects.map(function(s){
-        const n = Number(s.score);
-        const pct = isFinite(n) ? Math.max(0,Math.min(100,n)) : 0;
-        return '<div class="ac-score-subject">' +
-          '<div><span>'+esc(s.name)+'</span><strong>'+esc(isFinite(n)?n:"-")+' /100</strong></div>' +
-          '<div class="ac-score-track"><i style="width:'+pct+'%"></i></div>' +
-        '</div>';
-      }).join("") +
-    '</div>';
+  const rank=(latest&&latest.rank)||current.rank;
+  const participants=(latest&&latest.participants)||current.participants;
+  const total=(latest&&latest.total)!=null?Number(latest.total):Number(current.total);
+  const examName=(latest&&latest.examName)||current.examName||"시험";
+  const examDate=(latest&&latest.examDate)||current.examDate||"";
+  const prevTotal=previous&&previous.total!=null?Number(previous.total):null;
+  const change=(prevTotal!=null&&isFinite(prevTotal)&&isFinite(total))?total-prevTotal:null;
+  const percentile=(rank&&participants&&Number(participants)>0)
+    ? Math.max(0,Math.min(100,(Number(rank)/Number(participants))*100))
+    : null;
 
-  if(score.trend && score.trend.length){
-    out += '<div class="ac-score-trend"><strong>전체 시험 총점 추이</strong>' +
-      '<div class="ac-score-trend-list">' +
-      score.trend.map(function(t){
-        return '<div><span>'+esc(t.examName || "")+'</span><b>'+esc(t.myTotal == null ? "-" : t.myTotal)+'</b></div>';
-      }).join("") +
-      '</div></div>';
+  const validSubjects=subjects
+    .map(function(s){ return {name:s.name||"-",score:Number(s.score)}; })
+    .filter(function(s){ return isFinite(s.score); });
+
+  const best=validSubjects.length
+    ? validSubjects.slice().sort(function(a,b){return b.score-a.score;})[0]
+    : null;
+
+  const weak=validSubjects.length
+    ? validSubjects.slice().sort(function(a,b){return a.score-b.score;})[0]
+    : null;
+
+  const ai=buildAssistantCounselScoreCommentDetailed_({
+    best:best,
+    weak:weak,
+    change:change,
+    index:index,
+    total:total,
+    rank:rank,
+    participants:participants,
+    percentile:percentile,
+    subjects:validSubjects,
+    previous:previous,
+    current:current,
+    allScores:allScores,
+    serverComment:(latest&&latest.aiComment)||""
+  });
+
+  let out="<div class='counsel-score-latest'>";
+
+  out+="<div class='counsel-score-head'>"+
+    "<div><div class='counsel-score-name'>"+esc(examName)+"</div><div class='sub'>"+esc(examDate)+"</div></div>"+
+    "<div class='counsel-score-total'>"+esc(isFinite(total)?total:"-")+"<span style='font-size:10px;color:#94a3b8'> /400</span></div>"+
+  "</div>";
+
+  out+="<div class='counsel-score-dashboard'>"+
+    "<div class='counsel-score-metric'><span>선택 시험 총점</span><strong>"+esc(isFinite(total)?total:"-")+"</strong><small>/ 400점</small></div>"+
+    "<div class='counsel-score-metric'><span>직렬 석차</span><strong>"+(rank&&participants?esc(rank+"위"):"-")+"</strong><small>"+(participants?esc("총 "+participants+"명"):"응시인원 -")+"</small></div>"+
+    "<div class='counsel-score-metric'><span>직전 시험 대비</span><strong>"+(change==null?"-":esc((change>0?"+":"")+change+"점"))+"</strong><small>"+(previous?esc(previous.examName||"이전 시험")+" 대비":"비교시험 없음")+"</small></div>"+
+    "<div class='counsel-score-metric'><span>시험 순서</span><strong>"+esc((allScores.length-index)+"회차")+"</strong><small>총 "+esc(allScores.length)+"회 등록</small></div>"+
+  "</div>";
+
+  const top20Map=current.subjectTop20||{};
+  const overallMap=current.subjectOverall||{};
+  const latestTop20Map={};
+  const latestOverallMap={};
+
+  if(index===0&&latest&&Array.isArray(latest.subjects)){
+    latest.subjects.forEach(function(s){
+      latestTop20Map[String(s.name||"")]=Number(s.top20Average);
+      latestOverallMap[String(s.name||"")]=Number(s.average);
+    });
   }
 
-  out += '<details class="ac-score-history"><summary>📚 시험별 성적 펼쳐보기</summary>' +
-    all.map(function(s){
-      return '<div class="ac-score-history-row"><strong>'+esc(s.examName || "시험")+'</strong>' +
-        '<span>'+esc(s.examDate || "")+'</span><b>'+esc(s.total == null ? "-" : s.total)+' /400</b></div>';
-    }).join("") + '</details>';
+  const subjectKeyByIndex=["korean","english","major1","major2"];
 
-  box.innerHTML = out;
+  out+="<div class='counsel-subject-analysis'>"+
+    subjects.map(function(s,si){
+      const n=Number(s.score);
+      const pct=isFinite(n)?Math.max(0,Math.min(100,n)):0;
+
+      let avg=Number(overallMap[subjectKeyByIndex[si]]);
+      if(!isFinite(avg))avg=Number(latestOverallMap[String(s.name||"")]);
+
+      let t=Number(top20Map[subjectKeyByIndex[si]]);
+      if(!isFinite(t))t=Number(latestTop20Map[String(s.name||"")]);
+
+      const avgGap=(isFinite(n)&&isFinite(avg))?n-avg:null;
+      const topGap=(isFinite(n)&&isFinite(t))?n-t:null;
+
+      const avgGapText=avgGap==null?"":(" · "+(avgGap>=0?"▲ ":"▼ ")+Math.abs(avgGap).toFixed(1)+"점");
+      const topGapText=topGap==null?"":(" · "+(topGap>=0?"▲ ":"▼ ")+Math.abs(topGap).toFixed(1)+"점");
+
+      return "<div class='counsel-subject-analysis-card'>"+
+        "<div class='counsel-subject-analysis-head'><span>"+esc(s.name||"-")+"</span><strong>"+esc(isFinite(n)?n:"-")+" /100</strong></div>"+
+        "<div class='counsel-subject-analysis-track'><div class='counsel-subject-analysis-bar' style='width:"+pct+"%'></div></div>"+
+        "<div style='font-size:10px;color:#64748b;margin-top:7px'>전체 평균 <strong style='color:#475569'>"+esc(isFinite(avg)?avg.toFixed(1):"-")+"점</strong>"+
+        (avgGapText?"<span style='margin-left:4px;color:"+(avgGap>=0?"#15803d":"#dc2626")+"'>"+esc(avgGapText)+"</span>":"")+"</div>"+
+        "<div style='font-size:10px;color:#64748b;margin-top:3px'>상위 20% 평균 <strong style='color:#2563eb'>"+esc(isFinite(t)?t.toFixed(1):"-")+"점</strong>"+
+        (topGapText?"<span style='margin-left:4px;color:"+(topGap>=0?"#15803d":"#dc2626")+"'>"+esc(topGapText)+"</span>":"")+"</div>"+
+      "</div>";
+    }).join("")+
+  "</div>";
+
+  out+="<div class='counsel-score-insight'>"+
+    "<div class='counsel-score-insight-box'><strong>강점 과목</strong>"+(best?esc(best.name+" "+best.score+"점"):"분석할 점수가 없습니다.")+"</div>"+
+    "<div class='counsel-score-insight-box'><strong>우선 보완 과목</strong>"+(weak?esc(weak.name+" "+weak.score+"점"):"분석할 점수가 없습니다.")+"</div>"+
+  "</div>";
+
+  out+="<div class='counsel-score-rank'>"+
+    (rank&&participants?esc(rank+"위 / "+participants+"명"):"-")+
+    (percentile!=null?" · 상위 약 "+esc(percentile.toFixed(1))+"%":"")+
+  "</div>";
+
+  out+=
+    "<details class='counsel-score-ai counsel-collapse'>" +
+      "<summary><strong>🤖 AI 성적 분석</strong><span class='collapse-label'>펼쳐보기</span></summary>" +
+      "<div class='counsel-score-ai-text'>"+esc(ai)+"</div>" +
+    "</details>";
+
+  out+="<div class='counsel-score-trend'>"+
+    "<div style='font-size:11px;font-weight:900;margin-bottom:6px'>전체 시험 총점 추이</div>"+
+    renderAssistantCounselTrendSvg_(score.trend||[])+
+  "</div>";
+
+  out+="<div class='counsel-score-history'>"+
+    "<div class='counsel-score-history-title'><strong>📚 시험별 성적</strong><span>시험을 클릭하면 위 상세분석이 변경됩니다.</span></div>"+
+    "<div class='counsel-score-history-scroll'>";
+
+  out+=allScores.map(function(x,i){
+    const hs=[
+      {name:"국어",score:x.korean},
+      {name:"영어",score:x.english},
+      {name:subjectNames.major1||"전공1",score:x.major1},
+      {name:subjectNames.major2||"전공2",score:x.major2}
+    ];
+    const hr=(x.rank&&x.participants)?x.rank+"위 / "+x.participants+"명":"-";
+
+    return "<button type='button' onclick='selectAssistantCounselScoreExam_("+i+")' "+
+      "style='display:block;width:100%;text-align:left;border:"+(i===index?"2px solid #ef4444":"1px solid #e5e7eb")+";"+
+      "background:"+(i===index?"#fff7f7":"#fff")+";border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer'>"+
+      "<div class='counsel-score-history-head'>"+
+        "<div><div class='counsel-score-history-name'>"+esc(x.examName||"시험")+(i===0?" <span style=\"font-size:9px;color:#ef4444\">최근</span>":"")+"</div>"+
+        "<div class='counsel-score-history-date'>"+esc(x.examDate||"")+"</div></div>"+
+        "<div class='counsel-score-history-total'>"+esc(x.total==null?"-":x.total)+"<span style='font-size:8px;color:#94a3b8'> /400</span></div>"+
+      "</div>"+
+      "<div class='counsel-score-history-subjects'>"+
+        hs.map(function(s){
+          return "<div class='counsel-score-history-subject'><span>"+esc(s.name)+"</span><strong>"+esc(s.score==null?"-":s.score)+"</strong></div>";
+        }).join("")+
+      "</div>"+
+      "<div class='counsel-score-history-rank'>"+esc(hr)+"</div>"+
+    "</button>";
+  }).join("");
+
+  out+="</div></div></div>";
+  box.innerHTML=out;
+}
+
+function buildAssistantCounselScoreCommentDetailed_(data){
+  const d=data||{};
+  const subjects=(d.subjects||[]).filter(function(s){return isFinite(Number(s.score));});
+  const total=isFinite(Number(d.total))?Number(d.total):null;
+  const rank=Number(d.rank);
+  const participants=Number(d.participants);
+  const percentile=(isFinite(rank)&&isFinite(participants)&&participants>0)
+    ? Math.max(0,Math.min(100,(rank/participants)*100))
+    : null;
+
+  const sorted=subjects.slice().sort(function(a,b){return Number(b.score)-Number(a.score);});
+  const best=sorted.length?sorted[0]:null;
+  const weak=sorted.length?sorted[sorted.length-1]:null;
+  const secondWeak=sorted.length>1?sorted[sorted.length-2]:null;
+  const lines=[];
+
+  let position="현재 시험에서 ";
+  if(total!==null) position+="총점 "+total+"점";
+  if(isFinite(rank)&&isFinite(participants)&&participants>0){
+    position+=(total!==null?", ":"")+rank+"위 / "+participants+"명";
+    if(percentile!==null) position+="(상위 약 "+percentile.toFixed(1)+"%)";
+  }
+  position+="입니다.";
+  lines.push("■ 현재 위치\n"+position);
+
+  if(best){
+    let strength=best.name+" "+best.score+"점이 가장 높은 과목입니다. ";
+    if(Number(best.score)>=80){
+      strength+="강점 과목으로 유지할 수 있으므로 새 범위를 넓히기보다 틀린 문제의 근거와 실수 원인을 확인하면서 정확도를 유지하는 것이 좋습니다.";
+    }else if(Number(best.score)>=60){
+      strength+="상대적으로 가장 안정적이지만 실수와 빈출 취약유형을 줄이면 추가 상승 여지가 있습니다.";
+    }else{
+      strength+="네 과목 중 상대적으로 높지만 절대 점수는 낮아 기본개념과 쉬운 기출을 함께 보완할 필요가 있습니다.";
+    }
+    lines.push("■ 강점 분석\n"+strength);
+  }
+
+  if(weak){
+    let weakness=weak.name+" "+weak.score+"점이 가장 낮아 우선 보완 과목입니다. ";
+    if(Number(weak.score)<50){
+      weakness+="기본개념을 다시 확인한 뒤 쉬운 기출부터 정확도를 올리는 것이 우선입니다.";
+    }else if(Number(weak.score)<70){
+      weakness+="기본개념은 어느 정도 있으나 적용형·기출형에서 흔들릴 수 있어 단원별 기출을 묶어서 복습하는 것이 좋습니다.";
+    }else{
+      weakness+="점수 자체는 나쁘지 않으므로 오답 유형과 실수 원인을 좁혀 보완하면 효율적으로 점수를 올릴 수 있습니다.";
+    }
+    if(secondWeak && secondWeak.name!==weak.name && Number(secondWeak.score)-Number(weak.score)<=10){
+      weakness+=" "+secondWeak.name+"("+secondWeak.score+"점)도 점수 차이가 크지 않아 함께 관리하는 것이 좋습니다.";
+    }
+    lines.push("■ 우선 보완\n"+weakness);
+  }
+
+  if(d.change!==null && d.change!==undefined && isFinite(Number(d.change))){
+    const change=Number(d.change);
+    let trend="";
+    if(change>0) trend="직전 시험보다 총점이 "+change+"점 상승했습니다. 상승 흐름은 긍정적이지만 취약 과목까지 함께 오른 것인지 확인해야 안정적인 상승으로 볼 수 있습니다.";
+    else if(change<0) trend="직전 시험보다 총점이 "+Math.abs(change)+"점 하락했습니다. 단순 점수 변화보다 어떤 과목에서 하락 폭이 컸는지 확인하고 해당 과목의 오답 원인을 먼저 점검하는 것이 좋습니다.";
+    else trend="직전 시험과 총점이 동일합니다. 총점은 같더라도 과목별 점수 구성은 달라질 수 있으므로 취약과목이 바뀌었는지 확인해보는 것이 좋습니다.";
+    lines.push("■ 이전 시험 대비\n"+trend);
+  }
+
+  if(subjects.length){
+    const ordered=subjects.slice().sort(function(a,b){return Number(a.score)-Number(b.score);});
+    const priority=ordered.slice(0,2).map(function(s){return s.name+"("+s.score+"점)";}).join(" → ");
+    lines.push("■ 학습 우선순위\n"+priority+" 순으로 복습 우선순위를 두고, 각 과목은 틀린 문항을 개념 부족·문제 해석·계산/판단 실수로 나누어 오답 원인을 기록하는 것을 권장합니다.");
+  }
+
+  if(d.serverComment){
+    lines.push("■ 참고\n"+d.serverComment);
+  }
+
+  return lines.join("\n\n");
+}
+
+function renderAssistantCounselTrendSvg_(trend){
+  if(!trend.length){
+    return "<div class='empty'>성적 추이 데이터가 없습니다.</div>";
+  }
+
+  const w=620,h=210,l=36,r=18,t=18,b=38;
+  const pw=w-l-r,ph=h-t-b;
+
+  const x=function(i){
+    return trend.length<=1 ? l+pw/2 : l+pw*i/(trend.length-1);
+  };
+
+  const y=function(v){
+    const n=Number(v);
+    const s=isFinite(n)?Math.max(0,Math.min(400,n)):0;
+    return t+ph*(1-s/400);
+  };
+
+  const pts=function(k){
+    return trend.map(function(d,i){
+      const n=Number(d[k]);
+      return isFinite(n)?x(i)+","+y(n):null;
+    }).filter(Boolean).join(" ");
+  };
+
+  const dots=function(k,color,radius){
+    return trend.map(function(d,i){
+      const n=Number(d[k]);
+      if(!isFinite(n))return "";
+      return "<circle cx='"+x(i)+"' cy='"+y(n)+"' r='"+radius+"' fill='"+color+"' stroke='#fff' stroke-width='2'></circle>";
+    }).join("");
+  };
+
+  const myScoreLabels=trend.map(function(d,i){
+    const n=Number(d.myTotal);
+    if(!isFinite(n))return "";
+    return "<text x='"+x(i)+"' y='"+(y(n)-10)+"' font-size='10' font-weight='900' text-anchor='middle' fill='#ef4444'>"+n+"</text>";
+  }).join("");
+
+  const grids=[0,100,200,300,400].map(function(v){
+    return "<line x1='"+l+"' y1='"+y(v)+"' x2='"+(w-r)+"' y2='"+y(v)+"' stroke='#eef2f7'/>"+
+      "<text x='"+(l-7)+"' y='"+(y(v)+3)+"' font-size='8' text-anchor='end' fill='#94a3b8'>"+v+"</text>";
+  }).join("");
+
+  const labels=trend.map(function(d,i){
+    return "<text x='"+x(i)+"' y='"+(h-10)+"' font-size='8' text-anchor='middle' fill='#64748b'>"+esc(d.examName||"")+"</text>";
+  }).join("");
+
+  return "<svg viewBox='0 0 "+w+" "+h+"'>"+
+      grids+
+      "<polyline fill='none' stroke='#9ca3af' stroke-width='2' points='"+pts("overallAverage")+"'></polyline>"+
+      "<polyline fill='none' stroke='#3478d4' stroke-width='2' points='"+pts("top20Average")+"'></polyline>"+
+      "<polyline fill='none' stroke='#ef4444' stroke-width='2.5' points='"+pts("myTotal")+"'></polyline>"+
+      dots("overallAverage","#9ca3af",4)+
+      dots("top20Average","#3478d4",4)+
+      dots("myTotal","#ef4444",5)+
+      myScoreLabels+
+      labels+
+    "</svg>"+
+    "<div style='font-size:10px;font-weight:800;margin-top:6px'>"+
+      "<span style='color:#ef4444'>● 내 점수</span> &nbsp;·&nbsp; "+
+      "<span style='color:#3478d4'>● 상위20% 평균</span> &nbsp;·&nbsp; "+
+      "<span style='color:#6b7280'>● 전체평균</span>"+
+    "</div>";
+}
+
+function loadAssistantDetailedWrongAnalysis_(studentId){
+  const box=document.getElementById("acCwWrongAnalysis");
+  if(!box)return;
+
+  box.innerHTML="<div class='empty'>오답 기반 상세 분석을 불러오는 중입니다.</div>";
+
+  api("assistantWrongAnalysis", {
+    sessionToken:sessionToken,
+    studentId:studentId
+  }).then(function(r){
+    if(!selectedAssistantCounselStudent ||
+       String(selectedAssistantCounselStudent.studentId)!==String(studentId)) return;
+
+    if(!r||!r.success){
+      box.innerHTML="";
+      return;
+    }
+    renderAssistantDetailedWrongAnalysis_(r);
+  }).catch(function(){
+    box.innerHTML="";
+  });
+}
+
+function renderAssistantDetailedWrongAnalysis_(r){
+  const box=document.getElementById("acCwWrongAnalysis");
+  if(!box)return;
+
+  const exam=r.exam||{};
+  const subjects=Array.isArray(r.subjects)?r.subjects:[];
+  if(!subjects.length){
+    box.innerHTML="";
+    return;
+  }
+
+  let html=
+    "<details class='counsel-ai-detail counsel-collapse'>" +
+      "<summary class='counsel-ai-detail-title'>" +
+        "<span>🧠 오답 기반 상세 AI 학습 분석 · "+esc(exam.examName||"최근 시험")+"</span>" +
+        "<span class='collapse-label'>펼쳐보기</span>" +
+      "</summary>" +
+      "<div class='counsel-collapse-body'>";
+
+  html+="<div class='counsel-ai-subject-grid'>"+
+    subjects.map(function(s){
+      return "<div class='counsel-ai-subject-card'>"+
+        "<b>"+esc(s.subject||"-")+" · "+esc(s.score==null?"-":s.score+"점")+"</b>"+
+        "<span>정답 "+esc(s.correctCount)+" / 25 · 오답 "+esc(s.wrongCount)+"문항"+
+        (s.hasWrongQuestionData?"":" <small style='color:#94a3b8'>(점수 기준)</small>")+"<br>"+
+        "오답 문항: "+esc((s.wrongQuestions||[]).join(", ")||(s.hasWrongQuestionData?"없음":"시험오답 데이터 없음"))+"<br>"+
+        "정답률 "+esc(s.accuracy)+"%"+
+        (s.overallAverage!=null?"<br>전체 평균 "+esc(Number(s.overallAverage).toFixed(1))+"점 · "+esc((Number(s.gapToOverall)>=0?"+":"")+Number(s.gapToOverall).toFixed(1)+"점"):"")+
+        (s.top20Average!=null?"<br>상위 20% 평균 "+esc(Number(s.top20Average).toFixed(1))+"점 · "+esc((Number(s.gapToTop20)>=0?"+":"")+Number(s.gapToTop20).toFixed(1)+"점"):"")+
+        "</span>"+
+      "</div>";
+    }).join("")+
+    "</div>";
+
+  (r.sections||[]).forEach(function(sec){
+    html+="<div class='counsel-ai-section'><strong>"+esc(sec.title||"")+"</strong><div>"+esc(sec.text||"")+"</div></div>";
+  });
+
+  html+="</div></details>";
+  box.innerHTML=html;
 }
 
 function saveAssistantCounselWorkspace_(){
