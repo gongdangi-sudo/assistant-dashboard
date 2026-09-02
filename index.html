@@ -340,7 +340,7 @@
     .ac-counsel-course-meta{color:#64748b;font-size:10px}
     .ac-counsel-history-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
     .ac-counsel-history-panel{padding:15px;border:1px solid #e5e7eb;border-radius:14px;background:#fff}
-    .ac-counsel-history-scroll{max-height:280px;overflow:auto;padding-right:4px}
+    .ac-counsel-history-scroll{height:260px;max-height:260px;overflow-y:auto;overflow-x:hidden;padding-right:7px;scrollbar-width:thin}
     .ac-counsel-history-card{padding:11px 0;border-bottom:1px solid #eef2f7}
     .ac-counsel-history-card:last-child{border-bottom:0}
     .ac-counsel-history-top{display:flex;justify-content:space-between;gap:8px;font-size:10px;font-weight:900}
@@ -356,17 +356,6 @@
     .ac-counsel-entry-card .field{margin-top:8px}
     .ac-counsel-entry-card .field label{margin:0 0 7px}
 
-
-    .ac-score-loadbox{
-      display:flex;justify-content:space-between;align-items:center;gap:12px;
-      padding:16px;border:1px dashed #d9dfea;border-radius:12px;background:#fafbfc;
-      font-size:11px;line-height:1.6;
-    }
-    .ac-score-loadbox span{color:#7b8492;font-size:10px}
-    .ac-score-loadbox button{
-      flex:0 0 auto;border:0;border-radius:10px;padding:10px 13px;
-      background:#6d3bd1;color:#fff;font-size:10px;font-weight:900;
-    }
     .ac-score-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:2px 0 10px}
     .ac-score-head>div>strong{font-size:13px}
     .ac-score-total{font-size:22px;font-weight:950;color:#ef4444}
@@ -407,7 +396,23 @@
       .add-time-btn{height:42px}
       .student-name-row{flex-wrap:wrap}
     }
-  </style>
+  
+/* ===== 부담임 상담기록 고정 높이 + 스크롤 ===== */
+.ac-counsel-history-scroll{
+  height:260px !important;
+  max-height:260px !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding-right:7px;
+  scrollbar-width:thin;
+}
+.ac-counsel-history-scroll::-webkit-scrollbar{width:7px}
+.ac-counsel-history-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:999px}
+@media(max-width:760px){
+  .ac-counsel-history-scroll{height:220px !important;max-height:220px !important}
+}
+
+</style>
 </head>
 <body>
 
@@ -1358,21 +1363,7 @@ function selectAssistantCounselStudent_(student){
     '<div class="empty">상담기록을 불러오는 중입니다.</div>';
 
   loadAssistantCounselWorkspace_(student.studentId);
-
-  document.getElementById("acCwScore").innerHTML =
-    '<div class="ac-score-loadbox">' +
-      '<div><strong>📊 성적 분석</strong><br><span>성적 데이터는 용량이 커서 필요할 때 불러옵니다.</span></div>' +
-      '<button type="button" id="acLoadScoreBtn">성적 분석 불러오기</button>' +
-    '</div>';
-
-  const scoreBtn = document.getElementById("acLoadScoreBtn");
-  if(scoreBtn){
-    scoreBtn.addEventListener("click", function(){
-      scoreBtn.disabled = true;
-      scoreBtn.textContent = "불러오는 중...";
-      loadAssistantCounselScore_(student.studentId);
-    });
-  }
+  loadAssistantCounselScore_(student.studentId);
 }
 
 function renderAssistantCounselCourses_(list){
@@ -1422,7 +1413,7 @@ function loadAssistantCounselWorkspace_(studentId){
     document.getElementById("acCwPenalty").textContent =
       "누적 벌점 " + (r.penaltyTotal == null ? "-" : r.penaltyTotal + "점");
 
-    // 강좌는 학생목록 API에서 이미 받아 즉시 표시하므로 다시 불러오지 않음
+    renderAssistantCounselCourses_(r.courses || []);
     renderAssistantCounselHistory_("acCwTeacherHistory", r.teacherCounseling || []);
     renderAssistantCounselHistory_("acCwAssistantHistory", r.assistantCounseling || []);
   }).catch(function(err){
