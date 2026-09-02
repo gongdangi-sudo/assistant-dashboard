@@ -5,43 +5,218 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>공단기 부담임 대시보드</title>
   <style>
+    :root{
+      --purple:#6d3bd1;
+      --purple-dark:#5d2fc0;
+      --purple-soft:#f4f0ff;
+      --bg:#f4f6fb;
+      --card:#fff;
+      --line:#e8eaf0;
+      --text:#1f2937;
+      --sub:#6b7280;
+      --green:#20844a;
+      --green-bg:#edf9f1;
+      --red:#c83c3c;
+      --red-bg:#fff1f1;
+      --blue:#3467c9;
+      --blue-bg:#eef4ff;
+      --orange:#b86b00;
+      --orange-bg:#fff7e7;
+      --shadow:0 8px 24px rgba(24,32,56,.07);
+    }
     *{box-sizing:border-box}
-    body{margin:0;background:#f5f6fa;color:#222;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR",Arial,sans-serif}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR",Arial,sans-serif;
+    }
+    button,input{font:inherit}
+    button{cursor:pointer}
     .hidden{display:none!important}
-    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-    .login-card{width:100%;max-width:420px;background:#fff;border-radius:24px;padding:30px 24px;box-shadow:0 12px 35px rgba(0,0,0,.08)}
-    h1{margin:0 0 8px;font-size:25px}.sub{color:#777;font-size:13px;margin-bottom:24px}
-    label{display:block;margin:14px 0 7px;font-size:13px;font-weight:800}
-    input,select{width:100%;height:48px;padding:0 13px;border:1px solid #ddd;border-radius:12px;background:#fff;font:inherit}
-    button{border:0;border-radius:12px;font-weight:900;cursor:pointer}
-    .primary{width:100%;height:50px;margin-top:18px;background:#6a3fc8;color:#fff}
+
+    /* 로그인 */
+    .login-wrap{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+      background:linear-gradient(135deg,#f8f6ff,#f3f5fb);
+    }
+    .login-card{
+      width:100%;max-width:420px;background:#fff;border-radius:24px;padding:30px 24px;
+      box-shadow:0 14px 40px rgba(48,34,94,.12)
+    }
+    .login-card h1{margin:0;font-size:25px}
+    .login-card .sub{margin:8px 0 24px;color:var(--sub);font-size:13px}
+    label{display:block;margin:14px 0 7px;font-size:13px;font-weight:900}
+    input{
+      width:100%;height:48px;padding:0 13px;border:1px solid #dfe2e8;border-radius:12px;
+      background:#fff;outline:none;
+    }
+    input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(109,59,209,.08)}
+    .primary{
+      width:100%;height:50px;margin-top:18px;border:0;border-radius:12px;
+      background:linear-gradient(90deg,var(--purple),var(--purple-dark));color:#fff;font-weight:900;
+    }
     .message{margin-top:12px;padding:11px;border-radius:10px;background:#fff0f0;color:#c62828;font-size:12px;display:none}
-    .header{padding:24px 18px 34px;background:#6a3fc8;color:#fff}
-    .header-inner{max-width:950px;margin:0 auto;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-    .header h1{font-size:23px}.header p{margin:6px 0 0;font-size:12px;opacity:.9}
-    .logout{height:36px;padding:0 12px;background:rgba(255,255,255,.16);color:#fff}
-    .content{width:100%;max-width:950px;margin:-16px auto 0;padding:0 14px 30px}
-    .card{background:#fff;border-radius:18px;padding:17px;margin-bottom:13px;box-shadow:0 7px 20px rgba(0,0,0,.06)}
-    .card-title{font-size:15px;font-weight:900;margin-bottom:12px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .student-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-height:430px;overflow-y:auto}
-    .student-btn{padding:12px;text-align:left;background:#f7f8fb;border:1px solid #eceef2;color:#222}
-    .student-btn.active{border-color:#6a3fc8;background:#f3efff}
-    .student-name{font-size:14px;font-weight:900}.student-meta{margin-top:4px;color:#777;font-size:10px}
-    .empty{padding:18px;text-align:center;color:#999;font-size:12px}
-    .proposal{border:1px solid #eceef2;border-radius:13px;padding:12px;margin-bottom:8px}
-    .proposal-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-    .proposal-name{font-size:13px;font-weight:900}.proposal-meta{margin-top:4px;color:#777;font-size:10px}
-    .status{padding:4px 8px;border-radius:999px;background:#f2f3f5;font-size:9px;font-weight:900;white-space:nowrap}
-    .status.accept{background:#edf8ef;color:#2e7d32}.status.reject{background:#fff0f0;color:#c62828}
-    .status.change{background:#eef4ff;color:#315ca8}
-    .change-box{margin-top:8px;padding:9px;border-radius:9px;background:#fff7e8;font-size:10px;line-height:1.5}
-    .change-actions{display:flex;gap:6px;margin-top:7px}
-    .change-actions button{border:0;border-radius:8px;padding:7px 10px;font-weight:900;cursor:pointer}
-    .change-approve{background:#edf8ef;color:#25733a}.change-reject{background:#fff0f0;color:#b42318}
-    .complete{margin-top:9px;height:34px;padding:0 11px;background:#222;color:#fff}
-    .search{margin-bottom:10px}
-    @media(max-width:720px){.grid{grid-template-columns:1fr}.student-list{grid-template-columns:1fr}}
+
+    /* 공통 */
+    .header{
+      background:linear-gradient(90deg,#743fd8,#6331c7);
+      color:#fff;padding:22px 18px 36px;
+    }
+    .header-inner{
+      max-width:1120px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+    }
+    .header h1{margin:0;font-size:25px}
+    .header p{margin:7px 0 0;font-size:12px;opacity:.92}
+    .logout{
+      border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.14);color:#fff;
+      height:38px;padding:0 14px;border-radius:12px;font-weight:900;
+    }
+    .content{width:100%;max-width:1120px;margin:-18px auto 0;padding:0 14px 32px}
+    .top-grid{display:grid;grid-template-columns:minmax(330px,.86fr) minmax(480px,1.14fr);gap:14px}
+    .card{
+      background:var(--card);border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);
+    }
+    .card-title{display:flex;align-items:center;gap:8px;margin-bottom:13px;font-size:16px;font-weight:950}
+    .card-sub{margin:-7px 0 13px;color:#8a8f9c;font-size:11px}
+    .empty{padding:22px 10px;text-align:center;color:#9aa0aa;font-size:12px}
+
+    /* 학생 */
+    .student-search-wrap{position:relative;margin-bottom:10px}
+    .student-search{padding-right:42px}
+    .search-mark{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#777}
+    .student-list{
+      display:flex;flex-direction:column;gap:7px;max-height:585px;overflow:auto;padding-right:4px;
+      scrollbar-width:thin;
+    }
+    .student-card{
+      width:100%;border:1px solid var(--line);border-radius:13px;background:#fafbfc;
+      padding:0;text-align:left;overflow:hidden;transition:.15s ease;
+    }
+    .student-card:hover{border-color:#d6cdf5;background:#fbfaff}
+    .student-card.active{border-color:var(--purple);background:#faf8ff;box-shadow:0 0 0 2px rgba(109,59,209,.06)}
+    .student-main{
+      display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px 13px;
+    }
+    .student-name-row{display:flex;align-items:center;gap:7px;min-width:0}
+    .student-name{font-size:14px;font-weight:950}
+    .student-job{
+      display:inline-flex;align-items:center;padding:3px 7px;border-radius:999px;
+      background:#f0ebff;color:var(--purple-dark);font-size:9px;font-weight:900;white-space:nowrap;
+    }
+    .student-meta{margin-top:5px;color:var(--sub);font-size:10px}
+    .student-arrow{font-size:16px;color:#757b86;transition:.15s ease}
+    .student-card.open .student-arrow{transform:rotate(90deg)}
+    .course-panel{display:none;border-top:1px solid var(--line);padding:11px 13px 12px;background:#fff}
+    .student-card.open .course-panel{display:block}
+    .course-title{font-size:10px;font-weight:950;color:var(--purple);margin-bottom:7px}
+    .course-row{
+      display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;
+      padding:7px 0;border-bottom:1px dashed #eceef2;font-size:10px;
+    }
+    .course-row:last-child{border-bottom:0}
+    .course-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .course-time{color:#625c76;font-size:9px;background:#f6f3ff;border-radius:8px;padding:4px 6px;white-space:nowrap}
+    .course-empty{color:#999;font-size:10px;line-height:1.5}
+    .student-count{margin-top:9px;color:#8a8f9c;font-size:10px}
+
+    /* 상담 제안 */
+    .selected-box{
+      display:flex;align-items:center;gap:11px;border:1px solid #ddd5f6;background:#faf8ff;
+      border-radius:13px;padding:12px;margin-bottom:13px;
+    }
+    .selected-icon{
+      width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      background:#eee7ff;color:var(--purple);font-size:18px;font-weight:900;flex:0 0 auto;
+    }
+    .selected-name{font-size:14px;font-weight:950}
+    .selected-job{color:var(--purple-dark);font-weight:900}
+    .selected-meta{margin-top:3px;color:var(--sub);font-size:10px}
+
+    .step-title{display:flex;align-items:center;gap:7px;margin:14px 0 8px;font-size:12px;font-weight:950}
+    .step-no{
+      display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
+      background:var(--purple);color:#fff;font-size:10px;
+    }
+    .date-row{display:grid;grid-template-columns:1fr;gap:8px}
+    .date-input{height:50px}
+
+    .time-note{margin-left:auto;color:#999;font-size:9px;font-weight:500}
+    .time-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+    .time-btn{
+      height:40px;border:1px solid #e1e4ea;background:#fff;border-radius:9px;color:#333;font-weight:850;
+    }
+    .time-btn:hover{border-color:#cbbdf0;background:#faf8ff}
+    .time-btn.active{border-color:var(--purple);background:#f1ebff;color:var(--purple-dark);box-shadow:0 0 0 2px rgba(109,59,209,.06)}
+    .custom-time-wrap{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px}
+    .custom-time-input{height:42px}
+    .add-time-btn{
+      min-width:100px;border:1px solid #cfc4f0;background:#faf8ff;color:var(--purple-dark);border-radius:10px;font-weight:900;
+    }
+    .unlimited-note{
+      margin-top:10px;padding:9px 10px;border-radius:10px;background:#f7f8fa;color:#69707b;
+      font-size:10px;line-height:1.5;
+    }
+    .send-btn{
+      width:100%;height:52px;margin-top:14px;border:0;border-radius:12px;
+      background:linear-gradient(90deg,var(--purple),var(--purple-dark));color:#fff;font-weight:950;font-size:13px;
+    }
+    .send-btn:disabled{opacity:.55;cursor:default}
+
+    /* 현황 */
+    .status-toolbar{
+      display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;
+    }
+    .filter-btn{
+      border:1px solid #dfe2e8;background:#fff;border-radius:9px;padding:7px 12px;color:#5d6470;font-size:10px;font-weight:900;
+    }
+    .filter-btn.active{border-color:var(--purple);background:#f5f1ff;color:var(--purple-dark)}
+    .table-wrap{width:100%;overflow:auto}
+    .status-table{width:100%;border-collapse:collapse;min-width:800px}
+    .status-table th{
+      padding:10px 9px;background:#fafbfc;border-bottom:1px solid var(--line);
+      color:#667085;font-size:10px;text-align:left;white-space:nowrap;
+    }
+    .status-table td{
+      padding:11px 9px;border-bottom:1px solid #eef0f3;font-size:10px;vertical-align:middle;
+    }
+    .table-student{font-weight:900}
+    .badge{
+      display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;
+      background:#f1f3f5;color:#59606b;font-size:9px;font-weight:950;white-space:nowrap;
+    }
+    .badge.accept{background:var(--green-bg);color:var(--green)}
+    .badge.reject{background:var(--red-bg);color:var(--red)}
+    .badge.change{background:var(--blue-bg);color:var(--blue)}
+    .badge.wait{background:var(--orange-bg);color:var(--orange)}
+    .row-actions{display:flex;gap:5px;flex-wrap:wrap}
+    .mini-btn{
+      border:1px solid #dfe2e8;background:#fff;border-radius:8px;padding:6px 8px;font-size:9px;font-weight:900;
+    }
+    .mini-btn.complete{border-color:#c8e7d2;color:var(--green);background:#f6fcf8}
+    .mini-btn.approve{border-color:#cbd8f7;color:var(--blue);background:#f6f9ff}
+    .mini-btn.reject{border-color:#f2caca;color:var(--red);background:#fff8f8}
+    .change-detail{
+      margin-top:6px;padding:8px;border-radius:8px;background:#fff8e8;color:#765400;font-size:9px;line-height:1.5;
+    }
+    .all-count{margin-left:auto;color:#8a8f9c;font-size:10px;align-self:center}
+    .tip{
+      margin-top:12px;padding:11px 12px;border-radius:11px;background:#f8f6ff;color:#69627c;font-size:10px;line-height:1.55;
+    }
+
+    @media(max-width:850px){
+      .top-grid{grid-template-columns:1fr}
+      .student-list{max-height:430px}
+    }
+    @media(max-width:560px){
+      .header h1{font-size:21px}
+      .content{padding:0 10px 24px}
+      .card{padding:14px;border-radius:16px}
+      .time-grid{grid-template-columns:repeat(3,1fr)}
+      .custom-time-wrap{grid-template-columns:1fr}
+      .add-time-btn{height:42px}
+      .student-name-row{flex-wrap:wrap}
+    }
   </style>
 </head>
 <body>
@@ -49,11 +224,14 @@
 <section id="loginView" class="login-wrap">
   <div class="login-card">
     <h1>부담임 대시보드</h1>
-    <div class="sub">계정 시트에 등록된 부담임 계정으로 로그인해주세요.</div>
+    <div class="sub">등록된 부담임 계정으로 로그인해주세요.</div>
+
     <label for="adminId">아이디</label>
     <input id="adminId" autocomplete="username">
+
     <label for="password">비밀번호</label>
     <input id="password" type="password" autocomplete="current-password">
+
     <button class="primary" id="loginBtn">로그인</button>
     <div id="loginMessage" class="message"></div>
   </div>
@@ -64,51 +242,90 @@
     <div class="header-inner">
       <div>
         <h1 id="assistantGreeting">부담임 대시보드</h1>
-        <p>담당 학생 상담 일정을 제안하고 응답 상태를 확인할 수 있습니다.</p>
+        <p>담당 학생의 수강 정보를 확인하고 상담 일정을 자유롭게 제안할 수 있습니다.</p>
       </div>
       <button class="logout" id="logoutBtn">로그아웃</button>
     </div>
   </header>
 
   <main class="content">
-    <div class="grid">
+    <div class="top-grid">
+
       <section class="card">
         <div class="card-title">👥 내 담당 학생</div>
-        <input id="studentSearch" class="search" placeholder="학생명 / 강의실 / 좌석 검색">
+        <div class="card-sub">학생을 클릭하면 수강 중인 강좌와 수업 시간을 확인할 수 있습니다.</div>
+
+        <div class="student-search-wrap">
+          <input id="studentSearch" class="student-search" placeholder="학생명 / 직렬 / 강의실 / 좌석 검색">
+          <span class="search-mark">⌕</span>
+        </div>
+
         <div id="studentList" class="student-list">
           <div class="empty">학생 정보를 불러오는 중입니다.</div>
         </div>
+
+        <div id="studentCount" class="student-count"></div>
       </section>
 
       <section class="card">
         <div class="card-title">📅 상담 일정 제안</div>
-        <div id="selectedStudentText" class="empty">왼쪽에서 학생을 선택해주세요.</div>
+
+        <div id="selectedStudentText" class="empty">
+          왼쪽에서 상담할 학생을 선택해주세요.
+        </div>
 
         <div id="proposalForm" class="hidden">
-          <label for="proposedDate">상담 날짜</label>
-          <input id="proposedDate" type="date">
+          <div class="step-title">
+            <span class="step-no">1</span>
+            상담 날짜 선택
+          </div>
+          <div class="date-row">
+            <input id="proposedDate" class="date-input" type="date">
+          </div>
 
-          <label for="proposedTime">상담 시간</label>
-          <select id="proposedTime">
-            <option value="">시간 선택</option>
-            <option>10:00</option><option>10:30</option>
-            <option>11:00</option><option>11:30</option>
-            <option>12:00</option><option>12:30</option>
-            <option>13:00</option><option>13:30</option>
-            <option>14:00</option><option>14:30</option>
-            <option>15:00</option><option>15:30</option>
-            <option>16:00</option>
-          </select>
+          <div class="step-title">
+            <span class="step-no">2</span>
+            상담 시간 선택
+            <span class="time-note">30분 단위 · 직접 입력 가능</span>
+          </div>
 
-          <button class="primary" id="sendProposalBtn">학생에게 일정 보내기</button>
+          <div id="timeGrid" class="time-grid"></div>
+
+          <div class="custom-time-wrap">
+            <input id="customTime" class="custom-time-input" type="time" step="300">
+            <button id="addCustomTimeBtn" class="add-time-btn" type="button">시간 선택</button>
+          </div>
+
+          <div class="unlimited-note">
+            동일 학생에게도 상담 일정을 여러 번 등록할 수 있습니다. 상담 일정 등록 횟수에는 제한이 없습니다.
+          </div>
+
+          <button class="send-btn" id="sendProposalBtn">학생에게 일정 보내기</button>
         </div>
       </section>
     </div>
 
     <section class="card">
-      <div class="card-title">🗂 상담 일정 현황</div>
+      <div class="card-title">🕘 상담 일정 현황</div>
+
+      <div class="status-toolbar" id="statusToolbar">
+        <button class="filter-btn active" data-filter="전체">전체</button>
+        <button class="filter-btn" data-filter="제안">응답대기</button>
+        <button class="filter-btn" data-filter="참석">참석</button>
+        <button class="filter-btn" data-filter="일정변경요청">변경요청</button>
+        <button class="filter-btn" data-filter="미참석">미참석</button>
+        <button class="filter-btn" data-filter="참여비희망">참여비희망</button>
+        <button class="filter-btn" data-filter="완료">완료</button>
+        <span id="counselingCount" class="all-count"></span>
+      </div>
+
       <div id="counselingList">
         <div class="empty">상담 일정을 불러오는 중입니다.</div>
+      </div>
+
+      <div class="tip">
+        학생이 일정 변경을 요청하면 이 화면에서 승인 또는 반려할 수 있습니다.
+        참석 또는 변경승인 상태의 일정은 상담 후 ‘상담 완료’ 처리할 수 있습니다.
       </div>
     </section>
   </main>
@@ -122,25 +339,34 @@ let sessionToken = "";
 let currentUser = null;
 let students = [];
 let selectedStudent = null;
+let selectedTime = "";
+let counselingRows = [];
+let counselingFilter = "전체";
+let openStudentId = "";
+
+const DEFAULT_TIMES = [
+  "09:00","09:30","10:00","10:30","11:00","11:30",
+  "12:00","12:30","13:00","13:30","14:00","14:30",
+  "15:00","15:30","16:00","16:30","17:00","17:30",
+  "18:00","18:30","19:00","19:30","20:00","20:30"
+];
 
 function api(action, params){
   return new Promise((resolve,reject)=>{
     const callbackName =
-      "__assistantCallback_" +
-      Date.now() + "_" +
-      Math.random().toString(36).slice(2,8);
+      "__assistantCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
 
     const script = document.createElement("script");
 
     const timeout = setTimeout(()=>{
       cleanup();
       reject(new Error("서버 응답 시간이 초과되었습니다."));
-    },10000);
+    },12000);
 
     function cleanup(){
       clearTimeout(timeout);
       try{ delete window[callbackName]; }catch(e){}
-      if(script.parentNode){ script.parentNode.removeChild(script); }
+      if(script.parentNode) script.parentNode.removeChild(script);
     }
 
     window[callbackName] = function(result){
@@ -150,9 +376,9 @@ function api(action, params){
 
     const query = new URLSearchParams(
       Object.assign({}, params || {}, {
-        action: action,
-        callback: callbackName,
-        _: String(Date.now())
+        action,
+        callback:callbackName,
+        _:String(Date.now())
       })
     );
 
@@ -173,6 +399,18 @@ document.getElementById("password").addEventListener("keydown", e=>{
 document.getElementById("logoutBtn").addEventListener("click", logout);
 document.getElementById("studentSearch").addEventListener("input", renderStudents);
 document.getElementById("sendProposalBtn").addEventListener("click", sendProposal);
+document.getElementById("addCustomTimeBtn").addEventListener("click", selectCustomTime);
+
+document.querySelectorAll("[data-filter]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    counselingFilter = btn.dataset.filter;
+    document.querySelectorAll("[data-filter]").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    renderCounseling();
+  });
+});
+
+renderTimeButtons();
 
 async function login(){
   const adminId = document.getElementById("adminId").value.trim();
@@ -181,20 +419,16 @@ async function login(){
   showLoginMessage("");
 
   try{
-    const result = await api("assistantLogin", {adminId,password});
+    const result = await api("assistantLogin",{adminId,password});
 
     if(!result || !result.success){
-      showLoginMessage(
-        result && result.message ? result.message : "로그인에 실패했습니다."
-      );
+      showLoginMessage(result && result.message ? result.message : "로그인에 실패했습니다.");
       return;
     }
 
     sessionToken = result.sessionToken;
     currentUser = result.user || {};
-
     sessionStorage.setItem("assistantPortalSession",sessionToken);
-
     openDashboard();
   }catch(error){
     showLoginMessage(error.message || "로그인 중 오류가 발생했습니다.");
@@ -206,10 +440,7 @@ function openDashboard(){
   document.getElementById("dashboardView").classList.remove("hidden");
 
   document.getElementById("assistantGreeting").textContent =
-    (currentUser && currentUser.name
-      ? currentUser.name + " 부담임"
-      : "부담임") +
-    " 대시보드";
+    ((currentUser && currentUser.name) ? currentUser.name + " 부담임" : "부담임") + " 대시보드";
 
   loadStudents();
   loadCounseling();
@@ -221,6 +452,9 @@ function logout(){
   currentUser = null;
   students = [];
   selectedStudent = null;
+  selectedTime = "";
+  counselingRows = [];
+  openStudentId = "";
 
   document.getElementById("dashboardView").classList.add("hidden");
   document.getElementById("loginView").classList.remove("hidden");
@@ -245,11 +479,52 @@ async function loadStudents(){
     students = Array.isArray(result.rows) ? result.rows : [];
     renderStudents();
   }catch(error){
-    box.innerHTML =
-      '<div class="empty">' +
-      esc(error.message || "학생 정보를 불러오지 못했습니다.") +
-      '</div>';
+    box.innerHTML = '<div class="empty">' + esc(error.message || "학생 정보를 불러오지 못했습니다.") + '</div>';
   }
+}
+
+function getStudentJob(student){
+  return String(
+    student.jobType ??
+    student.position ??
+    student.series ??
+    student.track ??
+    student.examType ??
+    student.category ??
+    ""
+  ).trim();
+}
+
+function normalizeCourses(student){
+  const raw =
+    student.courses ??
+    student.courseList ??
+    student.lectures ??
+    student.classes ??
+    student.enrollments ??
+    [];
+
+  if(Array.isArray(raw)){
+    return raw.map(item=>{
+      if(typeof item === "string"){
+        return {name:item,time:""};
+      }
+      return {
+        name:String(item.name ?? item.courseName ?? item.lectureName ?? item.subject ?? "").trim(),
+        time:String(item.time ?? item.schedule ?? item.classTime ?? item.dayTime ?? "").trim()
+      };
+    }).filter(x=>x.name || x.time);
+  }
+
+  if(typeof raw === "string" && raw.trim()){
+    return raw
+      .split(/\n|,/)
+      .map(x=>x.trim())
+      .filter(Boolean)
+      .map(x=>({name:x,time:""}));
+  }
+
+  return [];
 }
 
 function renderStudents(){
@@ -257,9 +532,15 @@ function renderStudents(){
   const q = document.getElementById("studentSearch").value.trim().toLowerCase();
 
   const filtered = students.filter(s=>{
-    const text = [s.name,s.classroom,s.seat,s.studentId].join(" ").toLowerCase();
-    return !q || text.indexOf(q) !== -1;
+    const job = getStudentJob(s);
+    const courseText = normalizeCourses(s).map(x=>x.name + " " + x.time).join(" ");
+    const text = [s.name,job,s.classroom,s.seat,s.studentId,courseText].join(" ").toLowerCase();
+    return !q || text.includes(q);
   });
+
+  document.getElementById("studentCount").textContent =
+    "총 " + filtered.length + "명" +
+    (filtered.length !== students.length ? " / 전체 " + students.length + "명" : "");
 
   if(!filtered.length){
     box.innerHTML = '<div class="empty">표시할 담당 학생이 없습니다.</div>';
@@ -269,40 +550,109 @@ function renderStudents(){
   box.innerHTML = "";
 
   filtered.forEach(student=>{
-    const btn = document.createElement("button");
-    btn.className =
-      "student-btn" +
-      (selectedStudent && selectedStudent.studentId === student.studentId
-        ? " active"
-        : "");
+    const job = getStudentJob(student);
+    const courses = normalizeCourses(student);
+    const isSelected = selectedStudent && selectedStudent.studentId === student.studentId;
+    const isOpen = openStudentId === student.studentId;
 
-    btn.innerHTML =
-      '<div class="student-name">' + esc(student.name) + '</div>' +
-      '<div class="student-meta">' +
-      esc(student.classroom || "-") + " · " +
-      esc(student.seat || "-") + "번</div>";
+    const wrapper = document.createElement("div");
+    wrapper.className =
+      "student-card" +
+      (isSelected ? " active" : "") +
+      (isOpen ? " open" : "");
 
-    btn.addEventListener("click", ()=>{
+    let courseHtml = "";
+    if(courses.length){
+      courseHtml =
+        '<div class="course-title">📚 수강 강좌 및 시간</div>' +
+        courses.map(c=>
+          '<div class="course-row">' +
+            '<div class="course-name">' + esc(c.name || "강좌") + '</div>' +
+            '<div class="course-time">' + esc(c.time || "시간 미등록") + '</div>' +
+          '</div>'
+        ).join("");
+    }else{
+      courseHtml =
+        '<div class="course-title">📚 수강 강좌 및 시간</div>' +
+        '<div class="course-empty">등록된 수강 강좌 정보가 없습니다.</div>';
+    }
+
+    wrapper.innerHTML =
+      '<div class="student-main">' +
+        '<div>' +
+          '<div class="student-name-row">' +
+            '<span class="student-name">' + esc(student.name) + '</span>' +
+            '<span class="student-job">' + esc(job || "직렬 미등록") + '</span>' +
+          '</div>' +
+          '<div class="student-meta">' +
+            esc(student.classroom || "-") + " · " +
+            esc(student.seat || "-") + "번" +
+          '</div>' +
+        '</div>' +
+        '<span class="student-arrow">›</span>' +
+      '</div>' +
+      '<div class="course-panel">' + courseHtml + '</div>';
+
+    wrapper.querySelector(".student-main").addEventListener("click", ()=>{
       selectedStudent = student;
+      openStudentId = (openStudentId === student.studentId) ? "" : student.studentId;
       renderStudents();
       showProposalForm();
     });
 
-    box.appendChild(btn);
+    box.appendChild(wrapper);
   });
 }
 
 function showProposalForm(){
   if(!selectedStudent) return;
 
-  document.getElementById("selectedStudentText").classList.remove("empty");
-  document.getElementById("selectedStudentText").innerHTML =
-    "<strong>" + esc(selectedStudent.name) + "</strong><br>" +
-    '<span style="font-size:11px;color:#777;">' +
-    esc(selectedStudent.classroom || "-") + " · " +
-    esc(selectedStudent.seat || "-") + "번</span>";
+  const job = getStudentJob(selectedStudent);
+
+  const selectedBox = document.getElementById("selectedStudentText");
+  selectedBox.className = "selected-box";
+  selectedBox.innerHTML =
+    '<div class="selected-icon">👤</div>' +
+    '<div>' +
+      '<div class="selected-name">' +
+        esc(selectedStudent.name) +
+        (job ? ' <span class="selected-job"> · ' + esc(job) + '</span>' : '') +
+      '</div>' +
+      '<div class="selected-meta">' +
+        esc(selectedStudent.classroom || "-") + " · " +
+        esc(selectedStudent.seat || "-") + "번" +
+      '</div>' +
+    '</div>';
 
   document.getElementById("proposalForm").classList.remove("hidden");
+}
+
+function renderTimeButtons(){
+  const box = document.getElementById("timeGrid");
+  box.innerHTML = "";
+
+  DEFAULT_TIMES.forEach(time=>{
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "time-btn" + (selectedTime === time ? " active" : "");
+    btn.textContent = time;
+    btn.addEventListener("click", ()=>{
+      selectedTime = time;
+      document.getElementById("customTime").value = time;
+      renderTimeButtons();
+    });
+    box.appendChild(btn);
+  });
+}
+
+function selectCustomTime(){
+  const value = document.getElementById("customTime").value;
+  if(!value){
+    alert("상담 시간을 선택해주세요.");
+    return;
+  }
+  selectedTime = value;
+  renderTimeButtons();
 }
 
 async function sendProposal(){
@@ -312,7 +662,7 @@ async function sendProposal(){
   }
 
   const proposedDate = document.getElementById("proposedDate").value;
-  const proposedTime = document.getElementById("proposedTime").value;
+  const proposedTime = selectedTime || document.getElementById("customTime").value;
 
   if(!proposedDate || !proposedTime){
     alert("상담 날짜와 시간을 선택해주세요.");
@@ -337,8 +687,14 @@ async function sendProposal(){
     }
 
     alert("상담 일정을 전송했습니다.");
+
+    // 무제한 일정 등록을 위해 학생 선택은 유지.
+    // 날짜/시간만 초기화해서 같은 학생에게 바로 다음 일정 등록 가능.
     document.getElementById("proposedDate").value = "";
-    document.getElementById("proposedTime").value = "";
+    document.getElementById("customTime").value = "";
+    selectedTime = "";
+    renderTimeButtons();
+
     loadCounseling();
 
   }catch(error){
@@ -364,106 +720,136 @@ async function loadCounseling(){
       return;
     }
 
-    const rows = Array.isArray(result.rows) ? result.rows : [];
-
-    if(!rows.length){
-      box.innerHTML = '<div class="empty">등록된 상담 일정이 없습니다.</div>';
-      return;
-    }
-
-    box.innerHTML = "";
-
-    rows.forEach(item=>{
-      const div = document.createElement("div");
-      div.className = "proposal";
-
-      let statusClass = "";
-      if(item.status === "참석" || item.status === "변경승인") statusClass = " accept";
-      if(item.status === "미참석" || item.status === "참여비희망" || item.status === "변경반려") statusClass = " reject";
-      if(item.status === "일정변경요청") statusClass = " change";
-
-      let extra = "";
-      if((item.status === "미참석" || item.status === "참여비희망") && item.rejectionReason){
-        extra =
-          '<div class="proposal-meta" style="color:#c62828;">사유: ' +
-          esc(item.rejectionReason) +
-          '</div>';
-      }
-
-      if(item.status === "일정변경요청"){
-        extra +=
-          '<div class="change-box"><strong>학생 일정 변경 요청</strong><br>' +
-          esc(item.requestedDate || "-") + " " + esc(item.requestedTime || "") +
-          (item.changeReason ? '<br>사유: ' + esc(item.changeReason) : '') +
-          '<div class="change-actions">' +
-            '<button class="change-approve" data-change-approve="' + esc(item.applicationId) + '">승인</button>' +
-            '<button class="change-reject" data-change-reject="' + esc(item.applicationId) + '">반려</button>' +
-          '</div></div>';
-      }
-
-      let completeButton = "";
-      if(item.status === "참석" || item.status === "변경승인"){
-        completeButton =
-          '<button class="complete" data-complete="' +
-          esc(item.applicationId) +
-          '">상담 완료</button>';
-      }
-
-      div.innerHTML =
-        '<div class="proposal-top">' +
-          '<div>' +
-            '<div class="proposal-name">' + esc(item.studentName) + '</div>' +
-            '<div class="proposal-meta">' +
-              esc(item.proposedDate) + " · " +
-              esc(item.proposedTime) + " · " +
-              esc(item.classroom || "-") + " " +
-              esc(item.seat || "-") + "번" +
-            '</div>' +
-            extra +
-          '</div>' +
-          '<span class="status' + statusClass + '">' +
-            esc(item.status || "제안") +
-          '</span>' +
-        '</div>' +
-        completeButton;
-
-      box.appendChild(div);
-    });
-
-    box.querySelectorAll("[data-complete]").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        completeCounseling(btn.dataset.complete);
-      });
-    });
-
-    box.querySelectorAll("[data-change-approve]").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        decideChange(btn.dataset.changeApprove, "승인");
-      });
-    });
-
-    box.querySelectorAll("[data-change-reject]").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        decideChange(btn.dataset.changeReject, "반려");
-      });
-    });
+    counselingRows = Array.isArray(result.rows) ? result.rows : [];
+    renderCounseling();
 
   }catch(error){
-    box.innerHTML =
-      '<div class="empty">' +
-      esc(error.message || "일정을 불러오지 못했습니다.") +
-      '</div>';
+    box.innerHTML = '<div class="empty">' + esc(error.message || "일정을 불러오지 못했습니다.") + '</div>';
   }
 }
 
-async function decideChange(applicationId, decision){
+function statusLabel(status){
+  const map = {
+    "제안":"응답대기",
+    "참석":"참석",
+    "미참석":"미참석",
+    "일정변경요청":"변경요청",
+    "참여비희망":"참여비희망",
+    "변경승인":"변경승인",
+    "변경반려":"변경반려",
+    "완료":"완료"
+  };
+  return map[status] || status || "제안";
+}
+
+function statusClass(status){
+  if(status === "참석" || status === "변경승인" || status === "완료") return "accept";
+  if(status === "미참석" || status === "참여비희망" || status === "변경반려") return "reject";
+  if(status === "일정변경요청") return "change";
+  return "wait";
+}
+
+function renderCounseling(){
+  const box = document.getElementById("counselingList");
+
+  const filtered = counselingRows.filter(item=>{
+    if(counselingFilter === "전체") return true;
+    if(counselingFilter === "참석"){
+      return item.status === "참석" || item.status === "변경승인";
+    }
+    return item.status === counselingFilter;
+  });
+
+  document.getElementById("counselingCount").textContent =
+    "표시 " + filtered.length + "건 / 전체 " + counselingRows.length + "건";
+
+  if(!filtered.length){
+    box.innerHTML = '<div class="empty">해당 상태의 상담 일정이 없습니다.</div>';
+    return;
+  }
+
+  // 화면에서 상담 일정을 자르지 않고 전부 표시
+  const rowsHtml = filtered.map(item=>{
+    let changeHtml = "";
+    if(item.status === "일정변경요청"){
+      changeHtml =
+        '<div class="change-detail">' +
+          '<strong>학생 변경 요청</strong><br>' +
+          esc(item.requestedDate || "-") + " " +
+          esc(item.requestedTime || "") +
+          (item.changeReason ? '<br>사유: ' + esc(item.changeReason) : '') +
+        '</div>';
+    }
+
+    if((item.status === "미참석" || item.status === "참여비희망") && item.rejectionReason){
+      changeHtml +=
+        '<div class="change-detail">사유: ' + esc(item.rejectionReason) + '</div>';
+    }
+
+    let actions = "";
+    if(item.status === "일정변경요청"){
+      actions +=
+        '<button class="mini-btn approve" data-change-approve="' + esc(item.applicationId) + '">변경 승인</button>' +
+        '<button class="mini-btn reject" data-change-reject="' + esc(item.applicationId) + '">반려</button>';
+    }
+    if(item.status === "참석" || item.status === "변경승인"){
+      actions +=
+        '<button class="mini-btn complete" data-complete="' + esc(item.applicationId) + '">상담 완료</button>';
+    }
+
+    const st = students.find(s=>String(s.studentId) === String(item.studentId));
+    const job = st ? getStudentJob(st) : "";
+
+    return (
+      '<tr>' +
+        '<td><span class="table-student">' + esc(item.studentName || "-") + '</span>' +
+          (job ? '<div class="student-meta">' + esc(job) + '</div>' : '') +
+        '</td>' +
+        '<td>' + esc(item.proposedDate || "-") + '</td>' +
+        '<td>' + esc(item.proposedTime || "-") + '</td>' +
+        '<td>' + esc(item.classroom || "-") + ' · ' + esc(item.seat || "-") + '번</td>' +
+        '<td><span class="badge ' + statusClass(item.status) + '">' + esc(statusLabel(item.status)) + '</span>' +
+          changeHtml +
+        '</td>' +
+        '<td><div class="row-actions">' + (actions || "-") + '</div></td>' +
+      '</tr>'
+    );
+  }).join("");
+
+  box.innerHTML =
+    '<div class="table-wrap">' +
+      '<table class="status-table">' +
+        '<thead><tr>' +
+          '<th>학생명 / 직렬</th>' +
+          '<th>상담 날짜</th>' +
+          '<th>상담 시간</th>' +
+          '<th>강의실 / 좌석</th>' +
+          '<th>상태</th>' +
+          '<th>작업</th>' +
+        '</tr></thead>' +
+        '<tbody>' + rowsHtml + '</tbody>' +
+      '</table>' +
+    '</div>';
+
+  box.querySelectorAll("[data-complete]").forEach(btn=>{
+    btn.addEventListener("click",()=>completeCounseling(btn.dataset.complete));
+  });
+
+  box.querySelectorAll("[data-change-approve]").forEach(btn=>{
+    btn.addEventListener("click",()=>decideChange(btn.dataset.changeApprove,"승인"));
+  });
+
+  box.querySelectorAll("[data-change-reject]").forEach(btn=>{
+    btn.addEventListener("click",()=>decideChange(btn.dataset.changeReject,"반려"));
+  });
+}
+
+async function decideChange(applicationId,decision){
   if(!confirm("일정 변경 요청을 " + decision + "할까요?")) return;
 
   try{
     const result = await api("assistantCounselingChangeDecision",{
-      sessionToken,
-      applicationId,
-      decision
+      sessionToken,applicationId,decision
     });
 
     if(!result || !result.success){
@@ -473,6 +859,7 @@ async function decideChange(applicationId, decision){
 
     alert(result.message || "처리되었습니다.");
     loadCounseling();
+
   }catch(error){
     alert(error.message || "처리 중 오류가 발생했습니다.");
   }
@@ -483,8 +870,7 @@ async function completeCounseling(applicationId){
 
   try{
     const result = await api("assistantCounselingComplete",{
-      sessionToken,
-      applicationId
+      sessionToken,applicationId
     });
 
     if(!result || !result.success){
@@ -501,13 +887,11 @@ async function completeCounseling(applicationId){
 
 function showLoginMessage(text){
   const box = document.getElementById("loginMessage");
-
   if(!text){
     box.style.display = "none";
     box.textContent = "";
     return;
   }
-
   box.style.display = "block";
   box.textContent = text;
 }
@@ -521,6 +905,5 @@ function esc(value){
     .replace(/'/g,"&#039;");
 }
 </script>
-
 </body>
 </html>
