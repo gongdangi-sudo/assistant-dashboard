@@ -86,12 +86,24 @@
     .student-search{padding-right:42px}
     .search-mark{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#777}
     .student-list{
-      display:flex;flex-direction:column;gap:7px;max-height:585px;overflow:auto;padding-right:4px;
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+      height:585px;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding-right:6px;
       scrollbar-width:thin;
+      overscroll-behavior:contain;
     }
+    .student-list::-webkit-scrollbar{width:8px}
+    .student-list::-webkit-scrollbar-track{background:#f3f4f6;border-radius:10px}
+    .student-list::-webkit-scrollbar-thumb{background:#c9c3da;border-radius:10px}
+    .student-list::-webkit-scrollbar-thumb:hover{background:#a99bd0}
     .student-card{
       width:100%;border:1px solid var(--line);border-radius:13px;background:#fafbfc;
       padding:0;text-align:left;overflow:hidden;transition:.15s ease;
+      flex:0 0 auto; /* 펼친 강좌 영역이 줄어들지 않도록 고정 */
     }
     .student-card:hover{border-color:#d6cdf5;background:#fbfaff}
     .student-card.active{border-color:var(--purple);background:#faf8ff;box-shadow:0 0 0 2px rgba(109,59,209,.06)}
@@ -107,16 +119,42 @@
     .student-meta{margin-top:5px;color:var(--sub);font-size:10px}
     .student-arrow{font-size:16px;color:#757b86;transition:.15s ease}
     .student-card.open .student-arrow{transform:rotate(90deg)}
-    .course-panel{display:none;border-top:1px solid var(--line);padding:11px 13px 12px;background:#fff}
+    .course-panel{
+      display:none;
+      border-top:1px solid var(--line);
+      padding:11px 13px 12px;
+      background:#fff;
+      max-height:240px;
+      overflow-y:auto;
+      overflow-x:hidden;
+      scrollbar-width:thin;
+    }
     .student-card.open .course-panel{display:block}
+    .course-panel::-webkit-scrollbar{width:6px}
+    .course-panel::-webkit-scrollbar-thumb{background:#d4cee7;border-radius:8px}
     .course-title{font-size:10px;font-weight:950;color:var(--purple);margin-bottom:7px}
     .course-row{
-      display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;
-      padding:7px 0;border-bottom:1px dashed #eceef2;font-size:10px;
+      display:block;
+      padding:9px 0;border-bottom:1px dashed #eceef2;font-size:10px;
     }
     .course-row:last-child{border-bottom:0}
-    .course-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .course-time{color:#625c76;font-size:9px;background:#f6f3ff;border-radius:8px;padding:4px 6px;white-space:nowrap}
+    .course-name{
+      font-weight:850;
+      white-space:normal;
+      word-break:keep-all;
+      line-height:1.45;
+    }
+    .course-time{
+      display:block;
+      margin-top:5px;
+      color:#625c76;
+      font-size:9px;
+      background:#f6f3ff;
+      border-radius:8px;
+      padding:6px 8px;
+      white-space:normal;
+      line-height:1.45;
+    }
     .course-empty{color:#999;font-size:10px;line-height:1.5}
     .student-count{margin-top:9px;color:#8a8f9c;font-size:10px}
 
@@ -206,7 +244,7 @@
 
     @media(max-width:850px){
       .top-grid{grid-template-columns:1fr}
-      .student-list{max-height:430px}
+      .student-list{height:430px}
     }
     @media(max-width:560px){
       .header h1{font-size:21px}
