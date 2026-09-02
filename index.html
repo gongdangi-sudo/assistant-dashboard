@@ -242,6 +242,59 @@
       margin-top:12px;padding:11px 12px;border-radius:11px;background:#f8f6ff;color:#69627c;font-size:10px;line-height:1.55;
     }
 
+
+    .dashboard-tabs{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .dashboard-tab{
+      border:1px solid #e3e5eb;
+      background:#fff;
+      border-radius:16px;
+      padding:15px 16px;
+      text-align:left;
+      box-shadow:var(--shadow);
+      transition:.15s ease;
+    }
+    .dashboard-tab:hover{
+      border-color:#cfc4f0;
+      transform:translateY(-1px);
+    }
+    .dashboard-tab.active{
+      border-color:var(--purple);
+      background:linear-gradient(135deg,#faf7ff,#f2ecff);
+      box-shadow:0 8px 22px rgba(109,59,209,.12);
+    }
+    .dashboard-tab-title{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:15px;
+      font-weight:950;
+    }
+    .dashboard-tab-desc{
+      margin-top:5px;
+      color:#7a808c;
+      font-size:10px;
+      line-height:1.4;
+    }
+    .tab-panel.hidden{display:none!important}
+
+    .counsel-content-card{
+      min-height:420px;
+    }
+    .counsel-content-guide{
+      padding:18px;
+      border:1px dashed #d9d3eb;
+      background:#faf8ff;
+      border-radius:14px;
+      color:#69627c;
+      font-size:12px;
+      line-height:1.7;
+    }
+
     @media(max-width:850px){
       .top-grid{grid-template-columns:1fr}
       .student-list{height:430px}
@@ -287,6 +340,30 @@
   </header>
 
   <main class="content">
+
+    <div class="dashboard-tabs">
+      <button
+        type="button"
+        id="reservationTabBtn"
+        class="dashboard-tab active"
+        data-dashboard-tab="reservation"
+      >
+        <div class="dashboard-tab-title">📅 상담예약</div>
+        <div class="dashboard-tab-desc">담당 학생 선택 · 상담 날짜/시간 제안 · 학생 응답 확인</div>
+      </button>
+
+      <button
+        type="button"
+        id="contentTabBtn"
+        class="dashboard-tab"
+        data-dashboard-tab="content"
+      >
+        <div class="dashboard-tab-title">📝 상담내용</div>
+        <div class="dashboard-tab-desc">상담 완료 후 상담 내용과 후속조치를 기록·확인</div>
+      </button>
+    </div>
+
+    <section id="reservationPanel" class="tab-panel">
     <div class="top-grid">
 
       <section class="card">
@@ -366,6 +443,20 @@
         참석 또는 변경승인 상태의 일정은 상담 후 ‘상담 완료’ 처리할 수 있습니다.
       </div>
     </section>
+    </section>
+
+    <section id="contentPanel" class="tab-panel hidden">
+      <section class="card counsel-content-card">
+        <div class="card-title">📝 상담내용</div>
+        <div class="card-sub">상담이 완료된 학생의 상담 내용과 후속조치를 기록하는 영역입니다.</div>
+
+        <div class="counsel-content-guide">
+          상담예약 화면과 상담내용 화면을 분리했습니다.<br>
+          다음 단계에서 이 영역에 <strong>학생 선택 → 상담내용 작성 → 후속조치 입력 → 저장 → 기존 상담기록 조회</strong> 기능을 연결하면 됩니다.
+        </div>
+      </section>
+    </section>
+
   </main>
 </section>
 
@@ -952,6 +1043,26 @@ function esc(value){
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
 }
+
+/* =========================
+   상담예약 / 상담내용 탭
+========================= */
+document.querySelectorAll("[data-dashboard-tab]").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    const target = btn.dataset.dashboardTab;
+
+    document.querySelectorAll("[data-dashboard-tab]").forEach(function(x){
+      x.classList.toggle("active", x === btn);
+    });
+
+    document.getElementById("reservationPanel")
+      .classList.toggle("hidden", target !== "reservation");
+
+    document.getElementById("contentPanel")
+      .classList.toggle("hidden", target !== "content");
+  });
+});
+
 </script>
 </body>
 </html>
