@@ -185,7 +185,9 @@
       height:40px;border:1px solid #e1e4ea;background:#fff;border-radius:9px;color:#333;font-weight:850;
     }
     .time-btn:hover{border-color:#cbbdf0;background:#faf8ff}
-    .time-btn.active{border-color:var(--purple);background:#f1ebff;color:var(--purple-dark);box-shadow:0 0 0 2px rgba(109,59,209,.06)}
+    .time-btn.booked{opacity:.45;cursor:not-allowed;background:#e5e7eb!important;color:#6b7280!important;border-color:#d1d5db!important;}
+
+.time-btn.active{border-color:var(--purple);background:#f1ebff;color:var(--purple-dark);box-shadow:0 0 0 2px rgba(109,59,209,.06)}
     .custom-time-wrap{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px}
     .custom-time-input{height:42px}
     .add-time-btn{
@@ -910,26 +912,6 @@
 }
 
 
-
-/* ===== 부담임 상담 예약된 시간 표시 ===== */
-.time-btn.booked,
-.time-btn.booked:hover{
-  background:#e5e7eb !important;
-  border-color:#d1d5db !important;
-  color:#9ca3af !important;
-  cursor:not-allowed !important;
-  box-shadow:none !important;
-  opacity:1;
-}
-.time-btn.booked::after{
-  content:"예약";
-  display:block;
-  margin-top:1px;
-  font-size:8px;
-  font-weight:800;
-  color:#9ca3af;
-}
-
 </style>
 </head>
 <body>
@@ -1207,7 +1189,7 @@ function api(action, params){
     const timeout = setTimeout(()=>{
       cleanup();
       reject(new Error("서버 응답 시간이 초과되었습니다."));
-    },12000);
+    },30000);
 
     function cleanup(){
       clearTimeout(timeout);
@@ -1247,15 +1229,6 @@ document.getElementById("studentSearch").addEventListener("input", renderStudent
 document.getElementById("sendProposalBtn").addEventListener("click", sendProposal);
 document.getElementById("addCustomTimeBtn").addEventListener("click", selectCustomTime);
 
-document.getElementById("proposedDate").addEventListener("change", function(){
-  // 날짜가 바뀌면 선택시간을 다시 검증
-  if(selectedTime && isAssistantBookedTime_(this.value, selectedTime)){
-    selectedTime = "";
-    document.getElementById("customTime").value = "";
-  }
-  renderTimeButtons();
-});
-
 document.querySelectorAll("[data-filter]").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     counselingFilter = btn.dataset.filter;
@@ -1266,6 +1239,14 @@ document.querySelectorAll("[data-filter]").forEach(btn=>{
 });
 
 renderTimeButtons();
+
+document.getElementById("proposedDate").addEventListener("change", function(){
+  if(selectedTime && isAssistantTimeBooked_(this.value, selectedTime)){
+    selectedTime = "";
+    document.getElementById("customTime").value = "";
+  }
+  renderTimeButtons();
+});
 
 async function login(){
   const adminId = document.getElementById("adminId").value.trim();
@@ -1350,21 +1331,6 @@ function getStudentJob(student){
   ).trim();
 }
 
-
-function formatAssistantCourseTime_(value){
-  let s = String(value || "").trim();
-  if(!s) return "";
-
-  // 여러 형태의 하이픈/공백까지 대응
-  s = s
-    .replace(/1\s*[-–—]\s*2/g, "09:00~13:00")
-    .replace(/3\s*[-–—]\s*4/g, "14:00~18:00")
-    .replace(/5\s*[-–—]\s*6/g, "18:40~22:00")
-    .replace(/5\s*[-–—]\s*7/g, "18:40~22:00");
-
-  return s;
-}
-
 function normalizeCourses(student){
   const raw =
     student.courses ??
@@ -1403,7 +1369,7 @@ function renderStudents(){
 
   const filtered = students.filter(s=>{
     const job = getStudentJob(s);
-    const courseText = normalizeCourses(s).map(x=>x.name + " " + formatAssistantCourseTime_(x.time)).join(" ");
+    const courseText = normalizeCourses(s).map(x=>x.name + " " + x.time).join(" ");
     const text = [s.name,job,s.classroom,s.seat,s.studentId,courseText].join(" ").toLowerCase();
     return !q || text.includes(q);
   });
@@ -1497,49 +1463,45 @@ function showProposalForm(){
   document.getElementById("proposalForm").classList.remove("hidden");
 }
 
-function isAssistantBookedTime_(dateText, timeText){
-  const date = String(dateText || "").trim();
-  const time = String(timeText || "").trim();
-  if(!date || !time) return false;
 
-  const activeStatuses = {
-    "제안":true,
-    "참석":true,
-    "일정변경요청":true,
-    "변경승인":true
-  };
-
+function isAssistantTimeBooked_(dateText,timeText){
+  if(!dateText || !timeText) return false;
+  const activeStatuses = ["제안","참석","일정변경요청","변경승인"];
   return (counselingRows || []).some(function(item){
-    return (
-      String(item.proposedDate || "").trim() === date &&
-      String(item.proposedTime || "").trim() === time &&
-      !!activeStatuses[String(item.status || "").trim()]
-    );
+    return String(item.proposedDate || "") === String(dateText) &&
+           String(item.proposedTime || "") === String(timeText) &&
+           activeStatuses.indexOf(String(item.status || "")) !== -1;
   });
+}
+
+function formatAssistantCourseTime_(value){
+  let s = String(value || "").trim();
+  if(!s) return "";
+  return s
+    .replace(/1\s*[-–—]\s*2/g, "09:00~13:00")
+    .replace(/3\s*[-–—]\s*4/g, "14:00~18:00")
+    .replace(/5\s*[-–—]\s*6/g, "18:40~22:00")
+    .replace(/5\s*[-–—]\s*7/g, "18:40~22:00");
 }
 
 function renderTimeButtons(){
   const box = document.getElementById("timeGrid");
   box.innerHTML = "";
 
-  const selectedDate =
-    String(document.getElementById("proposedDate").value || "").trim();
+  const dateText = document.getElementById("proposedDate").value;
 
   DEFAULT_TIMES.forEach(time=>{
-    const booked = isAssistantBookedTime_(selectedDate, time);
-
+    const booked = isAssistantTimeBooked_(dateText,time);
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.disabled = booked;
     btn.className =
       "time-btn" +
       (booked ? " booked" : "") +
       (!booked && selectedTime === time ? " active" : "");
-
-    btn.textContent = time;
-
+    btn.textContent = booked ? time + " 예약됨" : time;
+    btn.disabled = booked;
     if(booked){
-      btn.title = "이미 다른 학생에게 예약된 시간입니다.";
+      btn.title = "이미 다른 학생 상담이 예약된 시간입니다.";
     }else{
       btn.addEventListener("click", ()=>{
         selectedTime = time;
@@ -1547,7 +1509,6 @@ function renderTimeButtons(){
         renderTimeButtons();
       });
     }
-
     box.appendChild(btn);
   });
 }
@@ -1562,13 +1523,11 @@ function selectCustomTime(){
     alert("상담 시간은 09:00부터 21:00까지 선택할 수 있습니다.");
     return;
   }
-
   const dateText = document.getElementById("proposedDate").value;
-  if(isAssistantBookedTime_(dateText, value)){
-    alert("이미 다른 학생에게 예약된 상담 시간입니다.");
+  if(isAssistantTimeBooked_(dateText,value)){
+    alert("이미 예약된 상담 시간입니다.");
     return;
   }
-
   selectedTime = value;
   renderTimeButtons();
 }
@@ -1589,11 +1548,6 @@ async function sendProposal(){
 
   if(proposedTime < "09:00" || proposedTime > "21:00"){
     alert("상담 시간은 09:00부터 21:00까지 선택할 수 있습니다.");
-    return;
-  }
-
-  if(isAssistantBookedTime_(proposedDate, proposedTime)){
-    alert("이미 다른 학생에게 예약된 상담 시간입니다.");
     return;
   }
 
@@ -1650,7 +1604,6 @@ async function loadCounseling(){
 
     counselingRows = Array.isArray(result.rows) ? result.rows : [];
     renderCounseling();
-    renderTimeButtons();
 
   }catch(error){
     box.innerHTML = '<div class="empty">' + esc(error.message || "일정을 불러오지 못했습니다.") + '</div>';
