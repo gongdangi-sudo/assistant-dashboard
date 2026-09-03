@@ -1350,6 +1350,21 @@ function getStudentJob(student){
   ).trim();
 }
 
+
+function formatAssistantCourseTime_(value){
+  let s = String(value || "").trim();
+  if(!s) return "";
+
+  // 여러 형태의 하이픈/공백까지 대응
+  s = s
+    .replace(/1\s*[-–—]\s*2/g, "09:00~13:00")
+    .replace(/3\s*[-–—]\s*4/g, "14:00~18:00")
+    .replace(/5\s*[-–—]\s*6/g, "18:40~22:00")
+    .replace(/5\s*[-–—]\s*7/g, "18:40~22:00");
+
+  return s;
+}
+
 function normalizeCourses(student){
   const raw =
     student.courses ??
@@ -1388,7 +1403,7 @@ function renderStudents(){
 
   const filtered = students.filter(s=>{
     const job = getStudentJob(s);
-    const courseText = normalizeCourses(s).map(x=>x.name + " " + x.time).join(" ");
+    const courseText = normalizeCourses(s).map(x=>x.name + " " + formatAssistantCourseTime_(x.time)).join(" ");
     const text = [s.name,job,s.classroom,s.seat,s.studentId,courseText].join(" ").toLowerCase();
     return !q || text.includes(q);
   });
@@ -1423,7 +1438,7 @@ function renderStudents(){
         courses.map(c=>
           '<div class="course-row">' +
             '<div class="course-name">' + esc(c.name || "강좌") + '</div>' +
-            '<div class="course-time">' + esc(c.time || "시간 미등록") + '</div>' +
+            '<div class="course-time">' + esc(formatAssistantCourseTime_(c.time) || "시간 미등록") + '</div>' +
           '</div>'
         ).join("");
     }else{
