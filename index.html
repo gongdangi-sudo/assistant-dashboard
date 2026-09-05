@@ -1617,6 +1617,7 @@ function statusLabel(status){
     "미참석":"미참석",
     "일정변경요청":"변경요청",
     "참여비희망":"참여비희망",
+    "당일취소":"당일취소",
     "변경승인":"변경승인",
     "변경반려":"변경반려",
     "완료":"완료"
@@ -1626,7 +1627,7 @@ function statusLabel(status){
 
 function statusClass(status){
   if(status === "참석" || status === "변경승인" || status === "완료") return "accept";
-  if(status === "미참석" || status === "참여비희망" || status === "변경반려") return "reject";
+  if(status === "미참석" || status === "참여비희망" || status === "당일취소" || status === "변경반려") return "reject";
   if(status === "일정변경요청") return "change";
   return "wait";
 }
