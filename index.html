@@ -1005,13 +1005,13 @@
           <div class="step-title">
             <span class="step-no">2</span>
             상담 시간 선택
-            <span class="time-note">30분 단위 · 직접 입력 가능</span>
+            <span class="time-note">14:00~21:30 · 30분 단위</span>
           </div>
 
           <div id="timeGrid" class="time-grid"></div>
 
           <div class="custom-time-wrap">
-            <input id="customTime" class="custom-time-input" type="time" step="300" min="09:00" max="21:00">
+            <input id="customTime" class="custom-time-input" type="time" step="1800" min="14:00" max="21:30">
             <button id="addCustomTimeBtn" class="add-time-btn" type="button">시간 선택</button>
           </div>
 
@@ -1172,11 +1172,14 @@ let openStudentId = "";
 let selectedAssistantCounselStudent = null;
 
 const DEFAULT_TIMES = [
-  "09:00","09:30","10:00","10:30","11:00","11:30",
-  "12:00","12:30","13:00","13:30","14:00","14:30",
-  "15:00","15:30","16:00","16:30","17:00","17:30",
-  "18:00","18:30","19:00","19:30","20:00","20:30",
-  "21:00"
+  "14:00","14:30",
+  "15:00","15:30",
+  "16:00","16:30",
+  "17:00","17:30",
+  "18:00","18:30",
+  "19:00","19:30",
+  "20:00","20:30",
+  "21:00","21:30"
 ];
 
 function api(action, params){
@@ -1519,8 +1522,8 @@ function selectCustomTime(){
     alert("상담 시간을 선택해주세요.");
     return;
   }
-  if(value < "09:00" || value > "21:00"){
-    alert("상담 시간은 09:00부터 21:00까지 선택할 수 있습니다.");
+  if(value < "14:00" || value > "21:30"){
+    alert("상담 시간은 14:00부터 21:30까지 30분 단위로 선택할 수 있습니다.");
     return;
   }
   const dateText = document.getElementById("proposedDate").value;
@@ -1546,8 +1549,8 @@ async function sendProposal(){
     return;
   }
 
-  if(proposedTime < "09:00" || proposedTime > "21:00"){
-    alert("상담 시간은 09:00부터 21:00까지 선택할 수 있습니다.");
+  if(proposedTime < "14:00" || proposedTime > "21:30"){
+    alert("상담 시간은 14:00부터 21:30까지 30분 단위로 선택할 수 있습니다.");
     return;
   }
 
@@ -1617,7 +1620,6 @@ function statusLabel(status){
     "미참석":"미참석",
     "일정변경요청":"변경요청",
     "참여비희망":"참여비희망",
-    "당일취소":"당일취소",
     "변경승인":"변경승인",
     "변경반려":"변경반려",
     "완료":"완료"
@@ -1627,7 +1629,7 @@ function statusLabel(status){
 
 function statusClass(status){
   if(status === "참석" || status === "변경승인" || status === "완료") return "accept";
-  if(status === "미참석" || status === "참여비희망" || status === "당일취소" || status === "변경반려") return "reject";
+  if(status === "미참석" || status === "참여비희망" || status === "변경반려") return "reject";
   if(status === "일정변경요청") return "change";
   return "wait";
 }
