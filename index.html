@@ -912,6 +912,32 @@
 }
 
 
+
+/* ACMEMO_V1_20260912: 상담 일정 변경요청 메모 */
+.mini-btn.memo{border-color:#d9c9f8;background:#faf7ff;color:var(--purple-dark)}
+.assistant-memo-summary{margin-top:7px;max-width:270px;padding:8px;border:1px solid #e9defb;border-radius:8px;background:#faf7ff;color:#5b3b84}
+.assistant-memo-preview{margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:55px;overflow:hidden}
+.assistant-memo-modal{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(15,23,42,.5)}
+.assistant-memo-modal[hidden]{display:none}
+.assistant-memo-panel{width:100%;max-width:560px;max-height:90vh;overflow:auto;border-radius:18px;background:#fff;padding:20px;box-shadow:0 24px 70px rgba(0,0,0,.24)}
+.assistant-memo-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.assistant-memo-head h2{margin:0;font-size:18px}
+.assistant-memo-close{border:0;background:#f4f4f7;border-radius:9px;min-width:36px;height:36px;font-size:23px}
+.assistant-memo-context{margin:12px 0;padding:11px;border-radius:10px;background:#f8f6ff;font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.assistant-memo-history{max-height:240px;overflow:auto;margin:10px 0;border:1px solid #ece7f4;border-radius:10px;padding:0 12px}
+.assistant-memo-item{padding:11px 0;border-bottom:1px solid #eee}
+.assistant-memo-item:last-child{border-bottom:0}
+.assistant-memo-meta{font-size:10px;color:#777;line-height:1.5}
+.assistant-memo-text{margin-top:5px;font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.assistant-memo-panel textarea{width:100%;min-height:110px;border:1px solid #dfe2e8;border-radius:10px;padding:11px;font:inherit;font-size:13px;resize:vertical}
+.assistant-memo-help{margin:7px 0;font-size:11px;color:#6b7280;line-height:1.6}
+.assistant-memo-count{text-align:right;color:#888;font-size:10px}
+.assistant-memo-feedback{margin-top:9px;font-size:12px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.assistant-memo-feedback[data-kind="error"]{color:#b42318}
+.assistant-memo-feedback[data-kind="success"]{color:#166534}
+.assistant-memo-panel button:disabled{opacity:.5;cursor:default}
+@media(max-width:560px){.assistant-memo-modal{padding:10px}.assistant-memo-panel{padding:16px}}
+
 </style>
 </head>
 <body>
@@ -1043,7 +1069,7 @@
       </div>
 
       <div class="tip">
-        학생이 일정 변경을 요청하면 이 화면에서 승인 또는 반려할 수 있습니다.
+        학생이 일정 변경을 요청하면 메모를 보내거나, 별도로 승인 또는 반려할 수 있습니다.
         참석 또는 변경승인 상태의 일정은 상담 후 ‘상담 완료’ 처리할 수 있습니다.
       </div>
     </section>
@@ -1157,6 +1183,30 @@
   </main>
 </section>
 
+
+<!-- ACMEMO_V1_20260912: 학생 공개용 메모, 내부 상담기록과 분리 -->
+<section id="assistantMemoModal" class="assistant-memo-modal" hidden role="dialog" aria-modal="true" aria-labelledby="assistantMemoTitle">
+  <div class="assistant-memo-panel">
+    <div class="assistant-memo-head">
+      <h2 id="assistantMemoTitle">학생에게 메모 보내기</h2>
+      <button id="assistantMemoClose" class="assistant-memo-close" type="button" aria-label="닫기">×</button>
+    </div>
+    <div id="assistantMemoContext" class="assistant-memo-context"></div>
+    <div class="assistant-memo-head">
+      <strong style="font-size:12px">보낸 메모</strong>
+      <button id="assistantMemoRefresh" class="mini-btn" type="button">메모 새로고침</button>
+    </div>
+    <div id="assistantMemoHistory" class="assistant-memo-history"></div>
+    <div id="assistantMemoHistoryCount" class="assistant-memo-help"></div>
+    <label for="assistantMemoContent">학생에게 전달할 메모</label>
+    <textarea id="assistantMemoContent" maxlength="500" placeholder="예: 요청한 시간은 어렵습니다. 금요일 19시 30분은 가능하니 확인해주세요."></textarea>
+    <div id="assistantMemoCharCount" class="assistant-memo-count">0 / 500자</div>
+    <div class="assistant-memo-help">이 메모는 학생포털에 공개됩니다. 메모만 보내며 상담시간과 승인·반려 상태는 변경하지 않습니다.</div>
+    <button id="assistantMemoSend" class="send-btn" type="button">메모 보내기</button>
+    <div id="assistantMemoFeedback" class="assistant-memo-feedback" role="status" aria-live="polite"></div>
+  </div>
+</section>
+
 <script>
 const API_URL =
   "https://script.google.com/macros/s/AKfycbys-kQQEXdZ-exQRCuUZE618XLgXpddnb0mJKxDkgc8MOUeXREQedgYBrdSo61wX1Fa/exec";
@@ -1170,6 +1220,13 @@ let counselingRows = [];
 let counselingFilter = "전체";
 let openStudentId = "";
 let selectedAssistantCounselStudent = null;
+// 메모 요청은 버튼을 누를 때만 전송합니다. 자동 반복조회는 없습니다.
+let assistantMemoActiveId_ = "";
+let assistantMemoSending_ = false;
+let assistantMemoReady_ = false;
+let assistantMemoEpoch_ = 0;
+let assistantMemoReturnFocus_ = null;
+const assistantMemoDrafts_ = new Map();
 
 const DEFAULT_TIMES = [
   "14:00","14:30",
@@ -1286,6 +1343,14 @@ function openDashboard(){
 }
 
 function logout(){
+  assistantMemoEpoch_++;
+  assistantMemoActiveId_ = "";
+  assistantMemoSending_ = false;
+  assistantMemoReady_ = false;
+  assistantMemoDrafts_.clear();
+  document.getElementById("assistantMemoContent").value = "";
+  document.getElementById("assistantMemoHistory").textContent = "";
+  document.getElementById("assistantMemoModal").hidden = true;
   sessionStorage.removeItem("assistantPortalSession");
   sessionToken = "";
   currentUser = null;
@@ -1606,7 +1671,9 @@ async function loadCounseling(){
     }
 
     counselingRows = Array.isArray(result.rows) ? result.rows : [];
+    assistantMemoReady_ = result.memoFeatureVersion === "ACMEMO_V1_20260912";
     renderCounseling();
+    return result;
 
   }catch(error){
     box.innerHTML = '<div class="empty">' + esc(error.message || "일정을 불러오지 못했습니다.") + '</div>';
@@ -1671,7 +1738,21 @@ function renderCounseling(){
         '<div class="change-detail">사유: ' + esc(item.rejectionReason) + '</div>';
     }
 
+    const memos = Array.isArray(item.assistantMemos) ? item.assistantMemos : [];
+    if(memos.length){
+      changeHtml += '<div class="assistant-memo-summary"><strong>학생에게 보낸 메모 ' +
+        esc(item.assistantMemoCount || memos.length) + '건</strong>' +
+        '<div class="assistant-memo-preview">' + esc(memos[0].content) + '</div></div>';
+    }
+    if(item.assistantMemoReadError){
+      changeHtml += '<div class="change-detail">메모 조회 실패 · 메모 새로고침으로 확인해주세요.</div>';
+    }
+
     let actions = "";
+    if(canSendAssistantMemo_(item) || memos.length || item.assistantMemoReadError){
+      actions += '<button type="button" class="mini-btn memo" data-assistant-memo="' +
+        esc(item.applicationId) + '">' + (canSendAssistantMemo_(item) ? '학생에게 메모 보내기' : '보낸 메모 보기') + '</button>';
+    }
     if(item.status === "일정변경요청"){
       actions +=
         '<button class="mini-btn approve" data-change-approve="' + esc(item.applicationId) + '">변경 승인</button>' +
@@ -1716,6 +1797,10 @@ function renderCounseling(){
       '</table>' +
     '</div>';
 
+  box.querySelectorAll("[data-assistant-memo]").forEach(btn=>{
+    btn.addEventListener("click",()=>openAssistantMemo_(btn.dataset.assistantMemo));
+  });
+
   box.querySelectorAll("[data-complete]").forEach(btn=>{
     btn.addEventListener("click",()=>completeCounseling(btn.dataset.complete));
   });
@@ -1728,6 +1813,222 @@ function renderCounseling(){
     btn.addEventListener("click",()=>decideChange(btn.dataset.changeReject,"반려"));
   });
 }
+
+/* ACMEMO_V1_20260912: 상담 상태 변경과 분리된 메모 전송 */
+function canSendAssistantMemo_(item){
+  return !!item && ["일정변경요청","변경승인","변경반려"].includes(String(item.status || "")) &&
+    !!(item.requestedDate || item.requestedTime || item.changeReason);
+}
+
+function assistantMemoSelectedRow_(){
+  return counselingRows.find(item=>String(item.applicationId)===assistantMemoActiveId_) || null;
+}
+
+function assistantMemoFeedback_(text,kind){
+  const box=document.getElementById("assistantMemoFeedback");
+  box.textContent=text || "";
+  box.dataset.kind=kind || "";
+}
+
+function renderAssistantMemoDialog_(){
+  const row=assistantMemoSelectedRow_();
+  const context=document.getElementById("assistantMemoContext");
+  const history=document.getElementById("assistantMemoHistory");
+  const countBox=document.getElementById("assistantMemoHistoryCount");
+  if(!row){
+    context.textContent="해당 상담 일정을 찾지 못했습니다. 상담목록을 새로고침해주세요.";
+    history.textContent="";
+    countBox.textContent="";
+  }else{
+    context.textContent=(row.studentName || "학생")+" · "+(row.classroom || "-")+" · "+(row.seat || "-")+"번\n"+
+      "기존 일정: "+(row.proposedDate || "-")+" "+(row.proposedTime || "")+"\n"+
+      "변경 희망: "+(row.requestedDate || "-")+" "+(row.requestedTime || "")+"\n"+
+      "학생 사유: "+(row.changeReason || "미입력")+"\n현재 상태: "+statusLabel(row.status);
+    const memos=Array.isArray(row.assistantMemos)?row.assistantMemos:[];
+    history.innerHTML=memos.length?memos.map(memo=>
+      '<div class="assistant-memo-item"><div class="assistant-memo-meta">'+
+      esc(memo.senderName || "부담임")+' · '+esc(memo.sentAt || "")+'</div>'+
+      '<div class="assistant-memo-text">'+esc(memo.content || "")+'</div></div>'
+    ).join(""):'<div class="empty">'+(row.assistantMemoReadError?'메모 조회에 실패했습니다. 새로고침해주세요.':'아직 보낸 메모가 없습니다.')+'</div>';
+    const count=Number(row.assistantMemoCount)||memos.length;
+    countBox.textContent=(count>memos.length?"전체 "+count+"건 중 최근 "+memos.length+"건 표시 · ":"")+"최근에 보낸 메모가 위에 표시됩니다.";
+  }
+  updateAssistantMemoControls_();
+}
+
+function updateAssistantMemoControls_(){
+  const row=assistantMemoSelectedRow_();
+  const canWrite=assistantMemoReady_ && canSendAssistantMemo_(row);
+  document.getElementById("assistantMemoContent").disabled=assistantMemoSending_ || !canWrite;
+  document.getElementById("assistantMemoSend").disabled=assistantMemoSending_ || !canWrite;
+  document.getElementById("assistantMemoSend").textContent=assistantMemoSending_?"전송 중...":"메모 보내기";
+  document.getElementById("assistantMemoRefresh").disabled=assistantMemoSending_;
+  document.getElementById("assistantMemoClose").disabled=assistantMemoSending_;
+  document.getElementById("assistantMemoCharCount").textContent=
+    document.getElementById("assistantMemoContent").value.length+" / 500자";
+}
+
+function openAssistantMemo_(applicationId){
+  if(assistantMemoSending_)return;
+  assistantMemoActiveId_=String(applicationId || "");
+  if(!assistantMemoSelectedRow_())return;
+  assistantMemoReturnFocus_=document.activeElement;
+  const draft=assistantMemoDrafts_.get(assistantMemoActiveId_);
+  document.getElementById("assistantMemoContent").value=draft?draft.text:"";
+  document.getElementById("assistantMemoModal").hidden=false;
+  assistantMemoFeedback_(assistantMemoReady_?"":"서버의 메모 기능이 아직 확인되지 않았습니다. 새 버전 배포 후 메모 새로고침을 눌러주세요.",assistantMemoReady_?"":"error");
+  renderAssistantMemoDialog_();
+  const input=document.getElementById("assistantMemoContent");
+  (input.disabled?document.getElementById("assistantMemoClose"):input).focus();
+}
+
+function closeAssistantMemo_(){
+  if(assistantMemoSending_)return;
+  if(assistantMemoActiveId_){
+    const text=document.getElementById("assistantMemoContent").value;
+    const old=assistantMemoDrafts_.get(assistantMemoActiveId_);
+    assistantMemoDrafts_.set(assistantMemoActiveId_,{
+      text:text, requestId:old && old.text.trim()===text.trim()?old.requestId:""
+    });
+  }
+  assistantMemoActiveId_="";
+  document.getElementById("assistantMemoModal").hidden=true;
+  if(assistantMemoReturnFocus_ && assistantMemoReturnFocus_.isConnected)assistantMemoReturnFocus_.focus();
+}
+
+function createAssistantMemoRequestId_(){
+  const unique=(window.crypto && typeof window.crypto.randomUUID==="function")
+    ? window.crypto.randomUUID()
+    : Date.now().toString(36)+"_"+Math.random().toString(36).slice(2)+"_"+Math.random().toString(36).slice(2);
+  return "AMR-"+unique;
+}
+
+/** 메모 내용을 URL에 넣지 않고 POST 본문으로 전송합니다. */
+async function postAssistantMemo_(params){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),45000);
+  try{
+    const body=new URLSearchParams(Object.assign({},params,{action:"assistantCounselingMemoSend"}));
+    const response=await fetch(API_URL,{
+      method:"POST",credentials:"omit",redirect:"follow",
+      headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+      body:body.toString(),signal:controller.signal
+    });
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    const result=await response.json();
+    if(!result || typeof result.success!=="boolean")throw new Error("INVALID_RESPONSE");
+    return result;
+  }catch(error){
+    throw new Error("메모 저장 여부를 확인하지 못했습니다.");
+  }finally{
+    clearTimeout(timeout);
+  }
+}
+
+async function sendAssistantMemo_(){
+  if(assistantMemoSending_)return;
+  const item=assistantMemoSelectedRow_();
+  if(!assistantMemoReady_ || !canSendAssistantMemo_(item)){
+    assistantMemoFeedback_("시간 변경 요청이 있는 상담인지 확인해주세요.","error");
+    return;
+  }
+  const input=document.getElementById("assistantMemoContent");
+  const text=input.value.replace(/\r\n?/g,"\n").trim();
+  if(!text || text.length>500){
+    assistantMemoFeedback_("메모를 1~500자로 입력해주세요.","error");
+    input.focus();
+    return;
+  }
+  const id=assistantMemoActiveId_;
+  const old=assistantMemoDrafts_.get(id);
+  const requestId=old && old.text.trim()===text && old.requestId?old.requestId:createAssistantMemoRequestId_();
+  // 통신이 늦어 저장 확인을 못 한 경우 같은 내용은 같은 전송번호로 재확인합니다.
+  assistantMemoDrafts_.set(id,{text:text,requestId:requestId});
+  const requestSession=sessionToken;
+  const epoch=assistantMemoEpoch_;
+  assistantMemoSending_=true;
+  updateAssistantMemoControls_();
+  assistantMemoFeedback_("메모를 전송하고 있습니다.","");
+  try{
+    const result=await postAssistantMemo_({sessionToken:requestSession,applicationId:id,content:text,requestId:requestId});
+    if(sessionToken!==requestSession || assistantMemoEpoch_!==epoch)return;
+    if(!result.success){
+      assistantMemoFeedback_(result.message || "메모를 저장하지 못했습니다.","error");
+      return;
+    }
+    if(!result.memo || !result.memo.memoId){
+      throw new Error("메모 저장 결과를 확인하지 못했습니다.");
+    }
+    const current=counselingRows.find(row=>String(row.applicationId)===id);
+    if(current){
+      const memos=Array.isArray(current.assistantMemos)?current.assistantMemos:[];
+      if(!memos.some(memo=>memo.memoId===result.memo.memoId)){
+        current.assistantMemoCount=(Number(current.assistantMemoCount)||memos.length)+1;
+        current.assistantMemos=[result.memo].concat(memos).slice(0,30);
+      }
+      // 저장 성공은 기존 전체 메모 조회 성공과 다릅니다. 기존 조회오류 플래그는 보존합니다.
+    }
+    assistantMemoDrafts_.delete(id);
+    input.value="";
+    renderCounseling();
+    renderAssistantMemoDialog_();
+    assistantMemoFeedback_(result.message || "메모를 저장했습니다.","success");
+  }catch(error){
+    if(sessionToken!==requestSession || assistantMemoEpoch_!==epoch)return;
+    assistantMemoFeedback_("메모 저장 여부를 확인하지 못했습니다.\n‘메모 새로고침’으로 먼저 확인해주세요. 같은 내용을 다시 보내면 같은 전송번호로 중복을 확인합니다.","error");
+  }finally{
+    if(assistantMemoEpoch_===epoch){
+      assistantMemoSending_=false;
+      updateAssistantMemoControls_();
+    }
+  }
+}
+
+async function refreshAssistantMemo_(){
+  if(assistantMemoSending_)return;
+  const button=document.getElementById("assistantMemoRefresh");
+  button.disabled=true;
+  assistantMemoFeedback_("최신 메모를 확인하고 있습니다.","");
+  const id=assistantMemoActiveId_, epoch=assistantMemoEpoch_;
+  try{
+    const result=await loadCounseling();
+    if(epoch!==assistantMemoEpoch_ || id!==assistantMemoActiveId_)return;
+    renderAssistantMemoDialog_();
+    const row=assistantMemoSelectedRow_();
+    if(!result || !result.success || !assistantMemoReady_ || !row || row.assistantMemoReadError){
+      assistantMemoFeedback_("최신 메모 조회를 확인하지 못했습니다. 서버 배포 상태와 연결을 확인해주세요.","error");
+    }else{
+      const draft=assistantMemoDrafts_.get(id);
+      const found=draft && (row.assistantMemos || []).some(memo=>memo.requestId===draft.requestId);
+      if(found){
+        assistantMemoDrafts_.delete(id);
+        document.getElementById("assistantMemoContent").value="";
+        updateAssistantMemoControls_();
+      }
+      assistantMemoFeedback_(found?"앞서 전송한 메모가 저장된 것을 확인했습니다.":"최신 메모 내역으로 갱신했습니다.","success");
+    }
+  }finally{
+    if(epoch===assistantMemoEpoch_)updateAssistantMemoControls_();
+  }
+}
+
+document.getElementById("assistantMemoSend").addEventListener("click",sendAssistantMemo_);
+document.getElementById("assistantMemoRefresh").addEventListener("click",refreshAssistantMemo_);
+document.getElementById("assistantMemoClose").addEventListener("click",closeAssistantMemo_);
+document.getElementById("assistantMemoContent").addEventListener("input",updateAssistantMemoControls_);
+document.getElementById("assistantMemoModal").addEventListener("click",function(event){
+  if(event.target===this)closeAssistantMemo_();
+});
+document.getElementById("assistantMemoModal").addEventListener("keydown",function(event){
+  if(event.key==="Escape"){event.preventDefault();closeAssistantMemo_();return;}
+  if(event.key!=="Tab")return;
+  const focusable=Array.from(this.querySelectorAll('button:not(:disabled),textarea:not(:disabled)'));
+  if(!focusable.length){event.preventDefault();return;}
+  const first=focusable[0],last=focusable[focusable.length-1];
+  if(event.shiftKey && document.activeElement===first){event.preventDefault();last.focus();}
+  else if(!event.shiftKey && document.activeElement===last){event.preventDefault();first.focus();}
+});
+
 
 async function decideChange(applicationId,decision){
   if(!confirm("일정 변경 요청을 " + decision + "할까요?")) return;
