@@ -203,6 +203,41 @@
     }
     .send-btn:disabled{opacity:.55;cursor:default}
 
+
+
+    /* 상담 가능 일정 설정 */
+    .availability-editor{display:grid;grid-template-columns:180px 150px 1fr;gap:10px;align-items:end}
+    .availability-field label{display:block;margin:0 0 6px;color:#667085;font-size:10px;font-weight:900}
+    .availability-field select{width:100%;height:44px;padding:0 10px;border:1px solid #dfe2e8;border-radius:10px;background:#fff;font-weight:850}
+    .availability-time-wrap{margin-top:12px;padding:12px;border:1px solid #ece8f8;border-radius:12px;background:#fbfaff}
+    .availability-time-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px}
+    .availability-time-head strong{font-size:11px}
+    .availability-time-head span{color:#8a8f9c;font-size:9px}
+    .availability-time-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+    .availability-time-btn{height:34px;border:1px solid #dfe2e8;background:#fff;border-radius:8px;font-size:9px;font-weight:900;cursor:pointer}
+    .availability-time-btn.active{border-color:var(--purple);background:#efe9ff;color:var(--purple-dark)}
+    .availability-time-btn.blocked{border-color:#f2b8b5;background:#fff0ef;color:#b42318}
+    .availability-time-btn.booked{border-color:#d0d5dd;background:#eef1f4;color:#667085;cursor:not-allowed;opacity:1}
+    .availability-time-btn.off{border-color:#e4e7ec;background:#f7f8fa;color:#98a2b3;cursor:not-allowed}
+    .availability-mode-help{margin:8px 0 0;color:#7b8190;font-size:9px;line-height:1.5}
+    .availability-booked-note{display:inline-block;margin-left:8px;padding:3px 7px;border-radius:999px;background:#eef1f4;color:#59606b;font-size:9px;font-weight:950}
+    .availability-save-btn{height:44px;border:0;border-radius:10px;background:var(--purple);color:#fff;font-weight:950;padding:0 18px}
+    .availability-save-btn:disabled{opacity:.55}
+    .availability-list{display:grid;gap:7px;margin-top:12px;max-height:220px;overflow-y:auto;overflow-x:hidden;padding-right:6px;scrollbar-gutter:stable;overscroll-behavior:contain}
+    .availability-list::-webkit-scrollbar{width:8px}
+    .availability-list::-webkit-scrollbar-track{background:#f4f2f8;border-radius:999px}
+    .availability-list::-webkit-scrollbar-thumb{background:#cfc6ea;border-radius:999px}
+    .availability-list::-webkit-scrollbar-thumb:hover{background:#b8a9df}
+    .availability-row{display:grid;grid-template-columns:120px 90px minmax(0,1fr) auto;gap:9px;align-items:center;padding:10px 11px;border:1px solid #edf0f3;border-radius:10px;background:#fff}
+    .availability-row-date{font-size:11px;font-weight:950}
+    .availability-row-state{font-size:9px;font-weight:950;border-radius:999px;padding:4px 7px;text-align:center;background:#f1f3f5;color:#59606b}
+    .availability-row-state.on{background:#eefbf2;color:#1b7a3f}
+    .availability-row-times{font-size:10px;color:#5d6470;line-height:1.5}
+    .availability-edit-btn{border:1px solid #d8cef6;background:#faf8ff;color:var(--purple-dark);border-radius:8px;padding:6px 9px;font-size:9px;font-weight:900}
+    .availability-help{margin-top:9px;color:#7b8190;font-size:10px;line-height:1.55}
+    .proposal-availability-empty{grid-column:1/-1;padding:13px 10px;border:1px dashed #d7dce4;border-radius:10px;color:#8a8f9c;font-size:10px;text-align:center;background:#fafbfc}
+    @media(max-width:760px){.availability-editor{grid-template-columns:1fr}.availability-time-grid{grid-template-columns:repeat(4,1fr)}.availability-row{grid-template-columns:1fr auto}.availability-row-times{grid-column:1/-1}.availability-edit-btn{grid-column:2}}
+
     /* 현황 */
     .status-toolbar{
       display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;
@@ -236,6 +271,7 @@
     .mini-btn.complete{border-color:#c8e7d2;color:var(--green);background:#f6fcf8}
     .mini-btn.approve{border-color:#cbd8f7;color:var(--blue);background:#f6f9ff}
     .mini-btn.reject{border-color:#f2caca;color:var(--red);background:#fff8f8}
+    .mini-btn.cancel{border-color:#fecaca;color:#b91c1c;background:#fff5f5}
     .change-detail{
       margin-top:6px;padding:8px;border-radius:8px;background:#fff8e8;color:#765400;font-size:9px;line-height:1.5;
     }
@@ -243,6 +279,18 @@
     .tip{
       margin-top:12px;padding:11px 12px;border-radius:11px;background:#f8f6ff;color:#69627c;font-size:10px;line-height:1.55;
     }
+    .student-cancel-section{
+      margin-top:16px;padding-top:15px;border-top:1px solid #eceef2;
+    }
+    .student-cancel-head{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;
+    }
+    .student-cancel-title{font-size:11px;font-weight:950;color:#4b5563}
+    .student-cancel-count{color:#8a8f9c;font-size:10px;font-weight:850}
+    .student-cancel-list{max-height:220px;overflow-y:auto;overflow-x:auto;scrollbar-gutter:stable;overscroll-behavior:contain;border:1px solid #eef0f3;border-radius:10px}
+    .student-cancel-list .status-table{min-width:760px}
+    .student-cancel-list .status-table th{position:sticky;top:0;z-index:1;background:#fafbfc}
+    .cancel-reason{max-width:360px;white-space:normal;line-height:1.45;color:#667085}
 
 
     .dashboard-tabs{
@@ -348,6 +396,18 @@
     .ac-counsel-history-top{display:flex;justify-content:space-between;gap:8px;font-size:10px;font-weight:900}
     .ac-counsel-history-text{margin-top:5px;font-size:11px;line-height:1.55;white-space:pre-wrap}
     .ac-counsel-history-follow{margin-top:5px;color:#64748b;font-size:10px}
+.ac-counsel-history-actions{display:flex;justify-content:flex-end;gap:6px;margin-top:8px}
+.ac-counsel-history-delete-btn{
+  border:1px solid #fecaca;
+  background:#fff;
+  color:#dc2626;
+  border-radius:8px;
+  padding:5px 9px;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+.ac-counsel-history-delete-btn:hover{background:#fff7f7;border-color:#ef4444}
     .ac-counsel-entry-card{margin-top:14px;padding:15px;border:1px solid #fecaca;border-radius:14px;background:#fffafa}
     .ac-counsel-entry-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
     .ac-counsel-entry-card select,.ac-counsel-entry-card textarea{
@@ -912,32 +972,6 @@
 }
 
 
-
-/* ACMEMO_V1_20260912: 상담 일정 변경요청 메모 */
-.mini-btn.memo{border-color:#d9c9f8;background:#faf7ff;color:var(--purple-dark)}
-.assistant-memo-summary{margin-top:7px;max-width:270px;padding:8px;border:1px solid #e9defb;border-radius:8px;background:#faf7ff;color:#5b3b84}
-.assistant-memo-preview{margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:55px;overflow:hidden}
-.assistant-memo-modal{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(15,23,42,.5)}
-.assistant-memo-modal[hidden]{display:none}
-.assistant-memo-panel{width:100%;max-width:560px;max-height:90vh;overflow:auto;border-radius:18px;background:#fff;padding:20px;box-shadow:0 24px 70px rgba(0,0,0,.24)}
-.assistant-memo-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.assistant-memo-head h2{margin:0;font-size:18px}
-.assistant-memo-close{border:0;background:#f4f4f7;border-radius:9px;min-width:36px;height:36px;font-size:23px}
-.assistant-memo-context{margin:12px 0;padding:11px;border-radius:10px;background:#f8f6ff;font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
-.assistant-memo-history{max-height:240px;overflow:auto;margin:10px 0;border:1px solid #ece7f4;border-radius:10px;padding:0 12px}
-.assistant-memo-item{padding:11px 0;border-bottom:1px solid #eee}
-.assistant-memo-item:last-child{border-bottom:0}
-.assistant-memo-meta{font-size:10px;color:#777;line-height:1.5}
-.assistant-memo-text{margin-top:5px;font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
-.assistant-memo-panel textarea{width:100%;min-height:110px;border:1px solid #dfe2e8;border-radius:10px;padding:11px;font:inherit;font-size:13px;resize:vertical}
-.assistant-memo-help{margin:7px 0;font-size:11px;color:#6b7280;line-height:1.6}
-.assistant-memo-count{text-align:right;color:#888;font-size:10px}
-.assistant-memo-feedback{margin-top:9px;font-size:12px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
-.assistant-memo-feedback[data-kind="error"]{color:#b42318}
-.assistant-memo-feedback[data-kind="success"]{color:#166534}
-.assistant-memo-panel button:disabled{opacity:.5;cursor:default}
-@media(max-width:560px){.assistant-memo-modal{padding:10px}.assistant-memo-panel{padding:16px}}
-
 </style>
 </head>
 <body>
@@ -1031,13 +1065,13 @@
           <div class="step-title">
             <span class="step-no">2</span>
             상담 시간 선택
-            <span class="time-note">14:00~21:30 · 30분 단위</span>
+            <span class="time-note">상담 가능 일정에 등록한 시간만 선택</span>
           </div>
 
           <div id="timeGrid" class="time-grid"></div>
 
           <div class="custom-time-wrap">
-            <input id="customTime" class="custom-time-input" type="time" step="1800" min="14:00" max="21:30">
+            <input id="customTime" class="custom-time-input" type="time" step="1800" min="09:00" max="21:30">
             <button id="addCustomTimeBtn" class="add-time-btn" type="button">시간 선택</button>
           </div>
 
@@ -1051,6 +1085,44 @@
     </div>
 
     <section class="card">
+      <div class="card-title">🗓 상담 가능 일정 설정</div>
+      <div class="card-sub">학생의 상담일자 변경 요청과 부담임의 새 상담 일정 제안에 사용할 날짜·시간을 설정합니다. 미설정 날짜는 상담 불가로 처리됩니다.</div>
+
+      <div class="availability-editor">
+        <div class="availability-field">
+          <label for="availabilityDate">날짜</label>
+          <input id="availabilityDate" class="date-input" type="date">
+        </div>
+        <div class="availability-field">
+          <label for="availabilityStatus">상담 설정 방식</label>
+          <select id="availabilityStatus">
+            <option value="allow">상담 가능 시간 선택</option>
+            <option value="block">일부 시간만 상담 불가</option>
+            <option value="off">하루 전체 상담 불가</option>
+          </select>
+        </div>
+        <button type="button" id="saveAvailabilityBtn" class="availability-save-btn">설정 저장</button>
+      </div>
+
+      <div id="availabilityTimeWrap" class="availability-time-wrap">
+        <div class="availability-time-head">
+          <strong>상담 가능한 시간 선택</strong>
+          <span>09:00~21:30 · 30분 단위 · 복수 선택 가능</span>
+        </div>
+        <div id="availabilityTimeGrid" class="availability-time-grid"></div>
+        <div id="availabilityModeHelp" class="availability-mode-help"></div>
+      </div>
+
+      <div class="availability-help">
+        ‘상담 가능 시간 선택’은 선택한 시간만 열리고, ‘일부 시간만 상담 불가’는 선택한 시간만 막히고 나머지는 모두 열립니다. 이미 학생에게 보낸 일정은 시간표에 ‘예약완료’로 표시되며 설정을 바꿔도 자동 취소되지 않습니다.
+      </div>
+
+      <div id="availabilityList" class="availability-list">
+        <div class="empty">상담 가능 일정을 불러오는 중입니다.</div>
+      </div>
+    </section>
+
+    <section class="card">
       <div class="card-title">🕘 상담 일정 현황</div>
 
       <div class="status-toolbar" id="statusToolbar">
@@ -1061,6 +1133,7 @@
         <button class="filter-btn" data-filter="미참석">미참석</button>
         <button class="filter-btn" data-filter="참여비희망">참여비희망</button>
         <button class="filter-btn" data-filter="완료">완료</button>
+        <button class="filter-btn" data-filter="부담임취소">일정취소</button>
         <span id="counselingCount" class="all-count"></span>
       </div>
 
@@ -1068,8 +1141,19 @@
         <div class="empty">상담 일정을 불러오는 중입니다.</div>
       </div>
 
+      <div class="student-cancel-section">
+        <div class="student-cancel-head">
+          <div class="student-cancel-title">🚫 학생 예약취소 내역</div>
+          <span id="studentCancelCount" class="student-cancel-count">0건</span>
+        </div>
+        <div id="studentCancelList" class="student-cancel-list">
+          <div class="empty">예약취소 내역을 불러오는 중입니다.</div>
+        </div>
+      </div>
+
       <div class="tip">
-        학생이 일정 변경을 요청하면 메모를 보내거나, 별도로 승인 또는 반려할 수 있습니다.
+        학생이 일정 변경을 요청하면 이 화면에서 승인 또는 반려할 수 있습니다.
+        보낸 상담 일정은 ‘일정 취소’ 버튼으로 취소 안내 문구와 함께 학생에게 전달할 수 있습니다.
         참석 또는 변경승인 상태의 일정은 상담 후 ‘상담 완료’ 처리할 수 있습니다.
       </div>
     </section>
@@ -1183,33 +1267,8 @@
   </main>
 </section>
 
-
-<!-- ACMEMO_V1_20260912: 학생 공개용 메모, 내부 상담기록과 분리 -->
-<section id="assistantMemoModal" class="assistant-memo-modal" hidden role="dialog" aria-modal="true" aria-labelledby="assistantMemoTitle">
-  <div class="assistant-memo-panel">
-    <div class="assistant-memo-head">
-      <h2 id="assistantMemoTitle">학생에게 메모 보내기</h2>
-      <button id="assistantMemoClose" class="assistant-memo-close" type="button" aria-label="닫기">×</button>
-    </div>
-    <div id="assistantMemoContext" class="assistant-memo-context"></div>
-    <div class="assistant-memo-head">
-      <strong style="font-size:12px">보낸 메모</strong>
-      <button id="assistantMemoRefresh" class="mini-btn" type="button">메모 새로고침</button>
-    </div>
-    <div id="assistantMemoHistory" class="assistant-memo-history"></div>
-    <div id="assistantMemoHistoryCount" class="assistant-memo-help"></div>
-    <label for="assistantMemoContent">학생에게 전달할 메모</label>
-    <textarea id="assistantMemoContent" maxlength="500" placeholder="예: 요청한 시간은 어렵습니다. 금요일 19시 30분은 가능하니 확인해주세요."></textarea>
-    <div id="assistantMemoCharCount" class="assistant-memo-count">0 / 500자</div>
-    <div class="assistant-memo-help">이 메모는 학생포털에 공개됩니다. 메모만 보내며 상담시간과 승인·반려 상태는 변경하지 않습니다.</div>
-    <button id="assistantMemoSend" class="send-btn" type="button">메모 보내기</button>
-    <div id="assistantMemoFeedback" class="assistant-memo-feedback" role="status" aria-live="polite"></div>
-  </div>
-</section>
-
 <script>
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbys-kQQEXdZ-exQRCuUZE618XLgXpddnb0mJKxDkgc8MOUeXREQedgYBrdSo61wX1Fa/exec";
+const API_URL = window.location.origin + "/api/assistant";
 
 let sessionToken = "";
 let currentUser = null;
@@ -1220,22 +1279,16 @@ let counselingRows = [];
 let counselingFilter = "전체";
 let openStudentId = "";
 let selectedAssistantCounselStudent = null;
-// 메모 요청은 버튼을 누를 때만 전송합니다. 자동 반복조회는 없습니다.
-let assistantMemoActiveId_ = "";
-let assistantMemoSending_ = false;
-let assistantMemoReady_ = false;
-let assistantMemoEpoch_ = 0;
-let assistantMemoReturnFocus_ = null;
-const assistantMemoDrafts_ = new Map();
+let availabilityRows = [];
+let availabilityMap = Object.create(null);
+let availabilitySelectedTimes = new Set();
+let availabilityEditorMode_ = "allow";
 
 const DEFAULT_TIMES = [
-  "14:00","14:30",
-  "15:00","15:30",
-  "16:00","16:30",
-  "17:00","17:30",
-  "18:00","18:30",
-  "19:00","19:30",
-  "20:00","20:30",
+  "09:00","09:30","10:00","10:30","11:00","11:30",
+  "12:00","12:30","13:00","13:30","14:00","14:30",
+  "15:00","15:30","16:00","16:30","17:00","17:30",
+  "18:00","18:30","19:00","19:30","20:00","20:30",
   "21:00","21:30"
 ];
 
@@ -1288,6 +1341,9 @@ document.getElementById("logoutBtn").addEventListener("click", logout);
 document.getElementById("studentSearch").addEventListener("input", renderStudents);
 document.getElementById("sendProposalBtn").addEventListener("click", sendProposal);
 document.getElementById("addCustomTimeBtn").addEventListener("click", selectCustomTime);
+document.getElementById("saveAvailabilityBtn").addEventListener("click", saveAvailability_);
+document.getElementById("availabilityDate").addEventListener("change", syncAvailabilityEditorFromDate_);
+document.getElementById("availabilityStatus").addEventListener("change", changeAvailabilityMode_);
 
 document.querySelectorAll("[data-filter]").forEach(btn=>{
   btn.addEventListener("click", ()=>{
@@ -1301,10 +1357,8 @@ document.querySelectorAll("[data-filter]").forEach(btn=>{
 renderTimeButtons();
 
 document.getElementById("proposedDate").addEventListener("change", function(){
-  if(selectedTime && isAssistantTimeBooked_(this.value, selectedTime)){
-    selectedTime = "";
-    document.getElementById("customTime").value = "";
-  }
+  selectedTime = "";
+  document.getElementById("customTime").value = "";
   renderTimeButtons();
 });
 
@@ -1340,17 +1394,13 @@ function openDashboard(){
 
   loadStudents();
   loadCounseling();
+  loadAvailability_();
 }
 
 function logout(){
-  assistantMemoEpoch_++;
-  assistantMemoActiveId_ = "";
-  assistantMemoSending_ = false;
-  assistantMemoReady_ = false;
-  assistantMemoDrafts_.clear();
-  document.getElementById("assistantMemoContent").value = "";
-  document.getElementById("assistantMemoHistory").textContent = "";
-  document.getElementById("assistantMemoModal").hidden = true;
+  try {
+    api("assistantLogout", {sessionToken:sessionToken}).catch(function(){});
+  } catch (e) {}
   sessionStorage.removeItem("assistantPortalSession");
   sessionToken = "";
   currentUser = null;
@@ -1359,6 +1409,10 @@ function logout(){
   selectedTime = "";
   counselingRows = [];
   openStudentId = "";
+  availabilityRows = [];
+  availabilityMap = Object.create(null);
+  availabilitySelectedTimes = new Set();
+  availabilityEditorMode_ = "allow";
 
   document.getElementById("dashboardView").classList.add("hidden");
   document.getElementById("loginView").classList.remove("hidden");
@@ -1532,6 +1586,261 @@ function showProposalForm(){
 }
 
 
+function assistantTodayYmd_(){
+  const d=new Date();
+  return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");
+}
+
+function rebuildAvailabilityMap_(){
+  availabilityMap=Object.create(null);
+  (availabilityRows||[]).forEach(function(row){
+    availabilityMap[String(row.date||"")]={
+      date:String(row.date||""),
+      isAvailable:!!row.isAvailable,
+      times:Array.isArray(row.times)?row.times.slice():[]
+    };
+  });
+}
+
+function assistantActiveBookedStatuses_(){
+  return ["제안","참석","일정변경요청","변경승인"];
+}
+
+function assistantBookedTimesForDate_(dateText){
+  const set=new Set();
+  const active=assistantActiveBookedStatuses_();
+  (counselingRows||[]).forEach(function(item){
+    if(String(item.proposedDate||"")!==String(dateText||""))return;
+    if(active.indexOf(String(item.status||""))===-1)return;
+    const t=String(item.proposedTime||"").trim();
+    if(t)set.add(t);
+  });
+  return set;
+}
+
+function availabilityEffectiveTimes_(mode,selected){
+  const picked=selected instanceof Set?selected:new Set(selected||[]);
+  if(mode==="off")return [];
+  if(mode==="block"){
+    return DEFAULT_TIMES.filter(function(t){return !picked.has(t);});
+  }
+  return DEFAULT_TIMES.filter(function(t){return picked.has(t);});
+}
+
+function inferAvailabilityMode_(row){
+  if(!row||!row.isAvailable)return "off";
+  const times=Array.isArray(row.times)?row.times:[];
+  // 대부분의 시간이 열려 있으면 '일부 시간만 불가' 방식으로 편집하는 편이 더 간단합니다.
+  return times.length > Math.floor(DEFAULT_TIMES.length/2) ? "block" : "allow";
+}
+
+function availabilitySelectedFromRow_(row,mode){
+  if(!row||!row.isAvailable||mode==="off")return new Set();
+  const effective=new Set(Array.isArray(row.times)?row.times:[]);
+  if(mode==="block"){
+    return new Set(DEFAULT_TIMES.filter(function(t){return !effective.has(t);}));
+  }
+  return effective;
+}
+
+function changeAvailabilityMode_(){
+  const next=document.getElementById("availabilityStatus").value||"allow";
+  const current=availabilityEditorMode_||"allow";
+  const effective=availabilityEffectiveTimes_(current,availabilitySelectedTimes);
+  const effectiveSet=new Set(effective);
+
+  if(next==="allow"){
+    availabilitySelectedTimes=new Set(effective);
+  }else if(next==="block"){
+    // 기존에 열려 있던 시간을 유지하면서, 그 외 시간만 '불가' 선택 상태로 변환
+    availabilitySelectedTimes=new Set(DEFAULT_TIMES.filter(function(t){return !effectiveSet.has(t);}));
+  }else{
+    availabilitySelectedTimes=new Set();
+  }
+  availabilityEditorMode_=next;
+  renderAvailabilityTimeGrid_();
+}
+
+function renderAvailabilityTimeGrid_(){
+  const box=document.getElementById("availabilityTimeGrid");
+  const wrap=document.getElementById("availabilityTimeWrap");
+  const title=document.getElementById("availabilityTimeTitle");
+  const hint=document.getElementById("availabilityTimeHint");
+  const help=document.getElementById("availabilityModeHelp");
+  if(!box||!wrap)return;
+
+  const mode=document.getElementById("availabilityStatus").value||"allow";
+  availabilityEditorMode_=mode;
+  const date=document.getElementById("availabilityDate").value;
+  const booked=assistantBookedTimesForDate_(date);
+  wrap.style.display="block";
+  box.innerHTML="";
+
+  if(title)title.textContent=mode==="block"?"상담 불가 시간":(mode==="off"?"시간 현황":"상담 가능 시간");
+  if(hint)hint.textContent=mode==="block"
+    ? "선택한 시간만 불가 · 나머지 시간은 상담 가능"
+    : (mode==="off"?"신규 상담은 하루 전체 불가 · 기존 예약은 유지":"선택한 시간만 상담 가능");
+  if(help)help.textContent=mode==="block"
+    ? "불가능한 시간만 선택하세요. 예약완료 시간은 이미 학생에게 보낸 일정이라 변경할 수 없습니다."
+    : (mode==="off"?"하루 전체 신규 상담을 막습니다. 이미 예약된 시간은 예약완료로 계속 표시됩니다.":"학생에게 열어둘 상담 가능 시간을 선택하세요. 예약완료 시간은 자동으로 잠깁니다.");
+
+  DEFAULT_TIMES.forEach(function(time){
+    const isBooked=booked.has(time);
+    const selected=availabilitySelectedTimes.has(time);
+    const btn=document.createElement("button");
+    btn.type="button";
+
+    if(isBooked){
+      btn.className="availability-time-btn booked";
+      btn.textContent=time+" 예약완료";
+      btn.disabled=true;
+      btn.title="이미 학생에게 보낸 상담 일정입니다.";
+    }else if(mode==="off"){
+      btn.className="availability-time-btn off";
+      btn.textContent=time+" 불가";
+      btn.disabled=true;
+    }else if(mode==="block"){
+      btn.className="availability-time-btn"+(selected?" blocked":"");
+      btn.textContent=selected?time+" 불가":time;
+      btn.addEventListener("click",function(){
+        if(availabilitySelectedTimes.has(time))availabilitySelectedTimes.delete(time);
+        else availabilitySelectedTimes.add(time);
+        renderAvailabilityTimeGrid_();
+      });
+    }else{
+      btn.className="availability-time-btn"+(selected?" active":"");
+      btn.textContent=time;
+      btn.addEventListener("click",function(){
+        if(availabilitySelectedTimes.has(time))availabilitySelectedTimes.delete(time);
+        else availabilitySelectedTimes.add(time);
+        renderAvailabilityTimeGrid_();
+      });
+    }
+    box.appendChild(btn);
+  });
+}
+
+function syncAvailabilityEditorFromDate_(){
+  const date=document.getElementById("availabilityDate").value;
+  const row=availabilityMap[date]||null;
+  const mode=row?inferAvailabilityMode_(row):"allow";
+  document.getElementById("availabilityStatus").value=mode;
+  availabilityEditorMode_=mode;
+  availabilitySelectedTimes=availabilitySelectedFromRow_(row,mode);
+  renderAvailabilityTimeGrid_();
+}
+
+function availabilityDisplayRows_(){
+  const map=Object.create(null);
+  (availabilityRows||[]).forEach(function(row){
+    map[String(row.date||"")]=Object.assign({},row);
+  });
+  // 설정이 없어도 이미 보낸 예약이 있으면 일정 설정 목록에 날짜를 보여줍니다.
+  const active=assistantActiveBookedStatuses_();
+  (counselingRows||[]).forEach(function(item){
+    if(active.indexOf(String(item.status||""))===-1)return;
+    const d=String(item.proposedDate||"");
+    if(!d)return;
+    if(!map[d])map[d]={date:d,isAvailable:false,times:[],bookedOnly:true};
+  });
+  return Object.keys(map).sort().map(function(k){return map[k];});
+}
+
+function renderAvailabilityList_(){
+  const box=document.getElementById("availabilityList");
+  if(!box)return;
+  const rows=availabilityDisplayRows_().filter(function(x){return String(x.date||"")>=assistantTodayYmd_();});
+  if(!rows.length){
+    box.innerHTML='<div class="empty">설정된 상담 가능/불가 일정이나 예약완료 일정이 없습니다. 날짜를 선택해 먼저 설정해주세요.</div>';
+    return;
+  }
+  box.innerHTML=rows.map(function(row){
+    const times=Array.isArray(row.times)?row.times:[];
+    const booked=Array.from(assistantBookedTimesForDate_(row.date)).sort();
+    let detail="";
+    if(row.isAvailable){
+      detail=times.length?"가능 "+times.map(esc).join(" · "):"시간 미설정";
+    }else{
+      detail="해당 날짜 신규 상담 불가";
+    }
+    if(booked.length){
+      detail += '<br><span class="availability-booked-note">예약완료 '+booked.map(esc).join(" · ")+'</span>';
+    }
+    return '<div class="availability-row">'+
+      '<div class="availability-row-date">'+esc(row.date||"-")+'</div>'+
+      '<div class="availability-row-state '+(row.isAvailable?'on':'')+'">'+(row.isAvailable?'상담 가능':'상담 불가')+'</div>'+
+      '<div class="availability-row-times">'+detail+'</div>'+
+      '<button type="button" class="availability-edit-btn" data-availability-edit="'+esc(row.date||"")+'">수정</button>'+
+    '</div>';
+  }).join("");
+
+  box.querySelectorAll("[data-availability-edit]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      const date=btn.getAttribute("data-availability-edit")||"";
+      const row=availabilityMap[date]||null;
+      const mode=row?inferAvailabilityMode_(row):"allow";
+      document.getElementById("availabilityDate").value=date;
+      document.getElementById("availabilityStatus").value=mode;
+      availabilityEditorMode_=mode;
+      availabilitySelectedTimes=availabilitySelectedFromRow_(row,mode);
+      renderAvailabilityTimeGrid_();
+      document.getElementById("availabilityDate").scrollIntoView({behavior:"smooth",block:"center"});
+    });
+  });
+}
+
+async function loadAvailability_(){
+  const box=document.getElementById("availabilityList");
+  if(box)box.innerHTML='<div class="empty">상담 가능 일정을 불러오는 중입니다.</div>';
+  try{
+    const result=await api("assistantAvailabilityList",{sessionToken:sessionToken});
+    if(!result||!result.success){
+      if(box)box.innerHTML='<div class="empty">'+esc(result&&result.message?result.message:"상담 가능 일정을 불러오지 못했습니다.")+'</div>';
+      return;
+    }
+    availabilityRows=Array.isArray(result.rows)?result.rows:[];
+    rebuildAvailabilityMap_();
+    renderAvailabilityList_();
+    const dateEl=document.getElementById("availabilityDate");
+    dateEl.min=assistantTodayYmd_();
+    document.getElementById("proposedDate").min=assistantTodayYmd_();
+    if(!dateEl.value)dateEl.value=assistantTodayYmd_();
+    syncAvailabilityEditorFromDate_();
+    renderTimeButtons();
+  }catch(error){
+    if(box)box.innerHTML='<div class="empty">'+esc(error&&error.message?error.message:"상담 가능 일정을 불러오지 못했습니다.")+'</div>';
+  }
+}
+
+async function saveAvailability_(){
+  const date=document.getElementById("availabilityDate").value;
+  const mode=document.getElementById("availabilityStatus").value||"allow";
+  const times=availabilityEffectiveTimes_(mode,availabilitySelectedTimes).sort();
+  const isAvailable=mode!=="off";
+  if(!date){alert("날짜를 선택해주세요.");return;}
+  if(isAvailable&&!times.length){
+    alert("상담 가능한 시간이 하나도 없습니다. 하루 전체 상담 불가를 선택하거나 불가 시간을 줄여주세요.");
+    return;
+  }
+  const btn=document.getElementById("saveAvailabilityBtn");
+  btn.disabled=true;btn.textContent="저장 중...";
+  try{
+    const result=await api("assistantAvailabilitySave",{
+      sessionToken:sessionToken,
+      date:date,
+      isAvailable:isAvailable?"1":"0",
+      times:times.join(",")
+    });
+    if(!result||!result.success){alert(result&&result.message?result.message:"상담 가능 일정 저장에 실패했습니다.");return;}
+    alert(result.message||"상담 가능 일정을 저장했습니다.");
+    await loadAvailability_();
+  }catch(error){
+    alert(error&&error.message?error.message:"상담 가능 일정 저장 중 오류가 발생했습니다.");
+  }finally{
+    btn.disabled=false;btn.textContent="설정 저장";
+  }
+}
+
 function isAssistantTimeBooked_(dateText,timeText){
   if(!dateText || !timeText) return false;
   const activeStatuses = ["제안","참석","일정변경요청","변경승인"];
@@ -1553,50 +1862,73 @@ function formatAssistantCourseTime_(value){
 }
 
 function renderTimeButtons(){
-  const box = document.getElementById("timeGrid");
-  box.innerHTML = "";
+  const box=document.getElementById("timeGrid");
+  if(!box)return;
+  box.innerHTML="";
+  const dateText=document.getElementById("proposedDate").value;
+  const sendBtn=document.getElementById("sendProposalBtn");
+  const custom=document.getElementById("customTime");
+  const addCustom=document.getElementById("addCustomTimeBtn");
 
-  const dateText = document.getElementById("proposedDate").value;
+  if(!dateText){
+    box.innerHTML='<div class="proposal-availability-empty">상담 날짜를 선택해주세요. 부담임이 ‘상담 가능 일정 설정’에서 등록한 시간만 선택할 수 있습니다.</div>';
+    if(sendBtn)sendBtn.disabled=true;
+    if(custom)custom.disabled=true;
+    if(addCustom)addCustom.disabled=true;
+    return;
+  }
 
-  DEFAULT_TIMES.forEach(time=>{
-    const booked = isAssistantTimeBooked_(dateText,time);
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className =
-      "time-btn" +
-      (booked ? " booked" : "") +
-      (!booked && selectedTime === time ? " active" : "");
-    btn.textContent = booked ? time + " 예약됨" : time;
-    btn.disabled = booked;
+  const day=availabilityMap[dateText];
+  const times=day&&day.isAvailable&&Array.isArray(day.times)?day.times:[];
+  if(!times.length){
+    selectedTime="";
+    if(custom)custom.value="";
+    box.innerHTML='<div class="proposal-availability-empty">이 날짜는 상담 불가이거나 상담 가능한 시간이 아직 설정되지 않았습니다.</div>';
+    if(sendBtn)sendBtn.disabled=true;
+    if(custom)custom.disabled=true;
+    if(addCustom)addCustom.disabled=true;
+    return;
+  }
+
+  if(custom)custom.disabled=false;
+  if(addCustom)addCustom.disabled=false;
+  times.forEach(function(time){
+    const booked=isAssistantTimeBooked_(dateText,time);
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="time-btn"+(booked?" booked":"")+(!booked&&selectedTime===time?" active":"");
+    btn.textContent=booked?time+" 예약됨":time;
+    btn.disabled=booked;
     if(booked){
-      btn.title = "이미 다른 학생 상담이 예약된 시간입니다.";
+      btn.title="이미 다른 학생 상담이 예약된 시간입니다.";
     }else{
-      btn.addEventListener("click", ()=>{
-        selectedTime = time;
-        document.getElementById("customTime").value = time;
+      btn.addEventListener("click",function(){
+        selectedTime=time;
+        if(custom)custom.value=time;
         renderTimeButtons();
       });
     }
     box.appendChild(btn);
   });
+  if(sendBtn)sendBtn.disabled=!selectedTime;
 }
 
 function selectCustomTime(){
-  const value = document.getElementById("customTime").value;
-  if(!value){
-    alert("상담 시간을 선택해주세요.");
+  const value=document.getElementById("customTime").value;
+  const dateText=document.getElementById("proposedDate").value;
+  if(!dateText){alert("상담 날짜를 먼저 선택해주세요.");return;}
+  if(!value){alert("상담 시간을 선택해주세요.");return;}
+  const day=availabilityMap[dateText];
+  const times=day&&day.isAvailable&&Array.isArray(day.times)?day.times:[];
+  if(times.indexOf(value)===-1){
+    alert("해당 시간은 이 날짜의 상담 가능 시간으로 설정되어 있지 않습니다.");
     return;
   }
-  if(value < "14:00" || value > "21:30"){
-    alert("상담 시간은 14:00부터 21:30까지 30분 단위로 선택할 수 있습니다.");
-    return;
-  }
-  const dateText = document.getElementById("proposedDate").value;
   if(isAssistantTimeBooked_(dateText,value)){
     alert("이미 예약된 상담 시간입니다.");
     return;
   }
-  selectedTime = value;
+  selectedTime=value;
   renderTimeButtons();
 }
 
@@ -1614,8 +1946,10 @@ async function sendProposal(){
     return;
   }
 
-  if(proposedTime < "14:00" || proposedTime > "21:30"){
-    alert("상담 시간은 14:00부터 21:30까지 30분 단위로 선택할 수 있습니다.");
+  const day=availabilityMap[proposedDate];
+  const availableTimes=day&&day.isAvailable&&Array.isArray(day.times)?day.times:[];
+  if(availableTimes.indexOf(proposedTime)===-1){
+    alert("선택한 날짜/시간은 상담 가능 일정에 등록되어 있지 않습니다.");
     return;
   }
 
@@ -1671,9 +2005,11 @@ async function loadCounseling(){
     }
 
     counselingRows = Array.isArray(result.rows) ? result.rows : [];
-    assistantMemoReady_ = result.memoFeatureVersion === "ACMEMO_V1_20260912";
     renderCounseling();
-    return result;
+    renderStudentCanceledCounseling_();
+    renderTimeButtons();
+    renderAvailabilityTimeGrid_();
+    renderAvailabilityList_();
 
   }catch(error){
     box.innerHTML = '<div class="empty">' + esc(error.message || "일정을 불러오지 못했습니다.") + '</div>';
@@ -1687,6 +2023,9 @@ function statusLabel(status){
     "미참석":"미참석",
     "일정변경요청":"변경요청",
     "참여비희망":"참여비희망",
+    "당일취소":"당일취소",
+    "예약취소":"예약취소",
+    "부담임취소":"일정취소",
     "변경승인":"변경승인",
     "변경반려":"변경반려",
     "완료":"완료"
@@ -1696,7 +2035,7 @@ function statusLabel(status){
 
 function statusClass(status){
   if(status === "참석" || status === "변경승인" || status === "완료") return "accept";
-  if(status === "미참석" || status === "참여비희망" || status === "변경반려") return "reject";
+  if(status === "미참석" || status === "참여비희망" || status === "당일취소" || status === "예약취소" || status === "부담임취소" || status === "변경반려") return "reject";
   if(status === "일정변경요청") return "change";
   return "wait";
 }
@@ -1704,7 +2043,11 @@ function statusClass(status){
 function renderCounseling(){
   const box = document.getElementById("counselingList");
 
-  const filtered = counselingRows.filter(item=>{
+  const mainRows = counselingRows.filter(function(item){
+    return !["예약취소","당일취소"].includes(String(item.status||""));
+  });
+
+  const filtered = mainRows.filter(item=>{
     if(counselingFilter === "전체") return true;
     if(counselingFilter === "참석"){
       return item.status === "참석" || item.status === "변경승인";
@@ -1713,7 +2056,7 @@ function renderCounseling(){
   });
 
   document.getElementById("counselingCount").textContent =
-    "표시 " + filtered.length + "건 / 전체 " + counselingRows.length + "건";
+    "표시 " + filtered.length + "건 / 상담현황 " + mainRows.length + "건";
 
   if(!filtered.length){
     box.innerHTML = '<div class="empty">해당 상태의 상담 일정이 없습니다.</div>';
@@ -1733,26 +2076,15 @@ function renderCounseling(){
         '</div>';
     }
 
-    if((item.status === "미참석" || item.status === "참여비희망") && item.rejectionReason){
+    if((item.status === "미참석" || item.status === "참여비희망" || item.status === "예약취소" || item.status === "당일취소" || item.status === "부담임취소") && item.rejectionReason){
       changeHtml +=
-        '<div class="change-detail">사유: ' + esc(item.rejectionReason) + '</div>';
-    }
-
-    const memos = Array.isArray(item.assistantMemos) ? item.assistantMemos : [];
-    if(memos.length){
-      changeHtml += '<div class="assistant-memo-summary"><strong>학생에게 보낸 메모 ' +
-        esc(item.assistantMemoCount || memos.length) + '건</strong>' +
-        '<div class="assistant-memo-preview">' + esc(memos[0].content) + '</div></div>';
-    }
-    if(item.assistantMemoReadError){
-      changeHtml += '<div class="change-detail">메모 조회 실패 · 메모 새로고침으로 확인해주세요.</div>';
+        '<div class="change-detail">' +
+          (item.status === "부담임취소" ? '<strong>학생 안내 문구</strong><br>' : '사유: ') +
+          esc(item.rejectionReason) +
+        '</div>';
     }
 
     let actions = "";
-    if(canSendAssistantMemo_(item) || memos.length || item.assistantMemoReadError){
-      actions += '<button type="button" class="mini-btn memo" data-assistant-memo="' +
-        esc(item.applicationId) + '">' + (canSendAssistantMemo_(item) ? '학생에게 메모 보내기' : '보낸 메모 보기') + '</button>';
-    }
     if(item.status === "일정변경요청"){
       actions +=
         '<button class="mini-btn approve" data-change-approve="' + esc(item.applicationId) + '">변경 승인</button>' +
@@ -1761,6 +2093,11 @@ function renderCounseling(){
     if(item.status === "참석" || item.status === "변경승인"){
       actions +=
         '<button class="mini-btn complete" data-complete="' + esc(item.applicationId) + '">상담 완료</button>';
+    }
+
+    if(["제안","참석","미참석","일정변경요청","변경승인","변경반려"].includes(String(item.status||""))){
+      actions +=
+        '<button class="mini-btn cancel" data-counsel-cancel="' + esc(item.applicationId) + '">일정 취소</button>';
     }
 
     const st = students.find(s=>String(s.studentId) === String(item.studentId));
@@ -1797,12 +2134,12 @@ function renderCounseling(){
       '</table>' +
     '</div>';
 
-  box.querySelectorAll("[data-assistant-memo]").forEach(btn=>{
-    btn.addEventListener("click",()=>openAssistantMemo_(btn.dataset.assistantMemo));
-  });
-
   box.querySelectorAll("[data-complete]").forEach(btn=>{
     btn.addEventListener("click",()=>completeCounseling(btn.dataset.complete));
+  });
+
+  box.querySelectorAll("[data-counsel-cancel]").forEach(btn=>{
+    btn.addEventListener("click",()=>cancelCounselingSchedule_(btn.dataset.counselCancel));
   });
 
   box.querySelectorAll("[data-change-approve]").forEach(btn=>{
@@ -1814,221 +2151,104 @@ function renderCounseling(){
   });
 }
 
-/* ACMEMO_V1_20260912: 상담 상태 변경과 분리된 메모 전송 */
-function canSendAssistantMemo_(item){
-  return !!item && ["일정변경요청","변경승인","변경반려"].includes(String(item.status || "")) &&
-    !!(item.requestedDate || item.requestedTime || item.changeReason);
-}
+function renderStudentCanceledCounseling_(){
+  const box=document.getElementById("studentCancelList");
+  const count=document.getElementById("studentCancelCount");
+  if(!box || !count)return;
 
-function assistantMemoSelectedRow_(){
-  return counselingRows.find(item=>String(item.applicationId)===assistantMemoActiveId_) || null;
-}
-
-function assistantMemoFeedback_(text,kind){
-  const box=document.getElementById("assistantMemoFeedback");
-  box.textContent=text || "";
-  box.dataset.kind=kind || "";
-}
-
-function renderAssistantMemoDialog_(){
-  const row=assistantMemoSelectedRow_();
-  const context=document.getElementById("assistantMemoContext");
-  const history=document.getElementById("assistantMemoHistory");
-  const countBox=document.getElementById("assistantMemoHistoryCount");
-  if(!row){
-    context.textContent="해당 상담 일정을 찾지 못했습니다. 상담목록을 새로고침해주세요.";
-    history.textContent="";
-    countBox.textContent="";
-  }else{
-    context.textContent=(row.studentName || "학생")+" · "+(row.classroom || "-")+" · "+(row.seat || "-")+"번\n"+
-      "기존 일정: "+(row.proposedDate || "-")+" "+(row.proposedTime || "")+"\n"+
-      "변경 희망: "+(row.requestedDate || "-")+" "+(row.requestedTime || "")+"\n"+
-      "학생 사유: "+(row.changeReason || "미입력")+"\n현재 상태: "+statusLabel(row.status);
-    const memos=Array.isArray(row.assistantMemos)?row.assistantMemos:[];
-    history.innerHTML=memos.length?memos.map(memo=>
-      '<div class="assistant-memo-item"><div class="assistant-memo-meta">'+
-      esc(memo.senderName || "부담임")+' · '+esc(memo.sentAt || "")+'</div>'+
-      '<div class="assistant-memo-text">'+esc(memo.content || "")+'</div></div>'
-    ).join(""):'<div class="empty">'+(row.assistantMemoReadError?'메모 조회에 실패했습니다. 새로고침해주세요.':'아직 보낸 메모가 없습니다.')+'</div>';
-    const count=Number(row.assistantMemoCount)||memos.length;
-    countBox.textContent=(count>memos.length?"전체 "+count+"건 중 최근 "+memos.length+"건 표시 · ":"")+"최근에 보낸 메모가 위에 표시됩니다.";
-  }
-  updateAssistantMemoControls_();
-}
-
-function updateAssistantMemoControls_(){
-  const row=assistantMemoSelectedRow_();
-  const canWrite=assistantMemoReady_ && canSendAssistantMemo_(row);
-  document.getElementById("assistantMemoContent").disabled=assistantMemoSending_ || !canWrite;
-  document.getElementById("assistantMemoSend").disabled=assistantMemoSending_ || !canWrite;
-  document.getElementById("assistantMemoSend").textContent=assistantMemoSending_?"전송 중...":"메모 보내기";
-  document.getElementById("assistantMemoRefresh").disabled=assistantMemoSending_;
-  document.getElementById("assistantMemoClose").disabled=assistantMemoSending_;
-  document.getElementById("assistantMemoCharCount").textContent=
-    document.getElementById("assistantMemoContent").value.length+" / 500자";
-}
-
-function openAssistantMemo_(applicationId){
-  if(assistantMemoSending_)return;
-  assistantMemoActiveId_=String(applicationId || "");
-  if(!assistantMemoSelectedRow_())return;
-  assistantMemoReturnFocus_=document.activeElement;
-  const draft=assistantMemoDrafts_.get(assistantMemoActiveId_);
-  document.getElementById("assistantMemoContent").value=draft?draft.text:"";
-  document.getElementById("assistantMemoModal").hidden=false;
-  assistantMemoFeedback_(assistantMemoReady_?"":"서버의 메모 기능이 아직 확인되지 않았습니다. 새 버전 배포 후 메모 새로고침을 눌러주세요.",assistantMemoReady_?"":"error");
-  renderAssistantMemoDialog_();
-  const input=document.getElementById("assistantMemoContent");
-  (input.disabled?document.getElementById("assistantMemoClose"):input).focus();
-}
-
-function closeAssistantMemo_(){
-  if(assistantMemoSending_)return;
-  if(assistantMemoActiveId_){
-    const text=document.getElementById("assistantMemoContent").value;
-    const old=assistantMemoDrafts_.get(assistantMemoActiveId_);
-    assistantMemoDrafts_.set(assistantMemoActiveId_,{
-      text:text, requestId:old && old.text.trim()===text.trim()?old.requestId:""
+  const rows=(counselingRows||[])
+    .filter(function(item){
+      return ["예약취소","당일취소"].includes(String(item.status||""));
+    })
+    .sort(function(a,b){
+      return String(b.responseAt||b.updatedAt||"").localeCompare(String(a.responseAt||a.updatedAt||"")) ||
+             String(b.proposedDate||"").localeCompare(String(a.proposedDate||"")) ||
+             String(b.proposedTime||"").localeCompare(String(a.proposedTime||""));
     });
-  }
-  assistantMemoActiveId_="";
-  document.getElementById("assistantMemoModal").hidden=true;
-  if(assistantMemoReturnFocus_ && assistantMemoReturnFocus_.isConnected)assistantMemoReturnFocus_.focus();
-}
 
-function createAssistantMemoRequestId_(){
-  const unique=(window.crypto && typeof window.crypto.randomUUID==="function")
-    ? window.crypto.randomUUID()
-    : Date.now().toString(36)+"_"+Math.random().toString(36).slice(2)+"_"+Math.random().toString(36).slice(2);
-  return "AMR-"+unique;
-}
+  count.textContent=rows.length+"건";
 
-/** 메모 내용을 URL에 넣지 않고 POST 본문으로 전송합니다. */
-async function postAssistantMemo_(params){
-  const controller=new AbortController();
-  const timeout=setTimeout(()=>controller.abort(),45000);
-  try{
-    const body=new URLSearchParams(Object.assign({},params,{action:"assistantCounselingMemoSend"}));
-    const response=await fetch(API_URL,{
-      method:"POST",credentials:"omit",redirect:"follow",
-      headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-      body:body.toString(),signal:controller.signal
-    });
-    if(!response.ok)throw new Error("HTTP "+response.status);
-    const result=await response.json();
-    if(!result || typeof result.success!=="boolean")throw new Error("INVALID_RESPONSE");
-    return result;
-  }catch(error){
-    throw new Error("메모 저장 여부를 확인하지 못했습니다.");
-  }finally{
-    clearTimeout(timeout);
-  }
-}
-
-async function sendAssistantMemo_(){
-  if(assistantMemoSending_)return;
-  const item=assistantMemoSelectedRow_();
-  if(!assistantMemoReady_ || !canSendAssistantMemo_(item)){
-    assistantMemoFeedback_("시간 변경 요청이 있는 상담인지 확인해주세요.","error");
+  if(!rows.length){
+    box.innerHTML='<div class="empty">학생이 예약취소한 상담이 없습니다.</div>';
     return;
   }
-  const input=document.getElementById("assistantMemoContent");
-  const text=input.value.replace(/\r\n?/g,"\n").trim();
-  if(!text || text.length>500){
-    assistantMemoFeedback_("메모를 1~500자로 입력해주세요.","error");
-    input.focus();
+
+  const rowsHtml=rows.map(function(item){
+    const st=students.find(function(s){return String(s.studentId)===String(item.studentId);});
+    const job=st?getStudentJob(st):"";
+    return (
+      '<tr>'+
+        '<td><span class="table-student">'+esc(item.studentName||"-")+'</span>'+
+          (job?'<div class="student-meta">'+esc(job)+'</div>':'')+
+        '</td>'+
+        '<td>'+esc(item.proposedDate||"-")+'</td>'+
+        '<td>'+esc(item.proposedTime||"-")+'</td>'+
+        '<td>'+esc(item.responseAt||item.updatedAt||"-")+'</td>'+
+        '<td><span class="badge reject">'+esc(statusLabel(item.status))+'</span></td>'+
+        '<td class="cancel-reason">'+esc(item.rejectionReason||"사유 미입력")+'</td>'+
+      '</tr>'
+    );
+  }).join("");
+
+  box.innerHTML=
+    '<table class="status-table">'+
+      '<thead><tr>'+
+        '<th>학생명 / 직렬</th>'+
+        '<th>기존 상담일</th>'+
+        '<th>기존 상담시간</th>'+
+        '<th>취소 접수일시</th>'+
+        '<th>상태</th>'+
+        '<th>취소 사유</th>'+
+      '</tr></thead>'+
+      '<tbody>'+rowsHtml+'</tbody>'+
+    '</table>';
+}
+
+async function cancelCounselingSchedule_(applicationId){
+  const row=(counselingRows||[]).find(function(x){
+    return String(x.applicationId||"")===String(applicationId||"");
+  });
+
+  const studentName=row&&row.studentName?row.studentName:"학생";
+  const when=row?(String(row.proposedDate||"")+" "+String(row.proposedTime||"")):"";
+
+  const input=prompt(
+    studentName+" 학생에게 전달할 상담 일정 취소 안내 문구를 입력해주세요.\n"+
+    (when?"기존 일정: "+when+"\n":"")+
+    "예) 학원 일정으로 인해 이번 상담은 취소되었습니다. 새 일정은 다시 안내드리겠습니다."
+  );
+
+  if(input===null)return;
+  const cancelMessage=String(input||"").trim();
+  if(!cancelMessage){
+    alert("학생에게 전달할 취소 안내 문구를 입력해주세요.");
     return;
   }
-  const id=assistantMemoActiveId_;
-  const old=assistantMemoDrafts_.get(id);
-  const requestId=old && old.text.trim()===text && old.requestId?old.requestId:createAssistantMemoRequestId_();
-  // 통신이 늦어 저장 확인을 못 한 경우 같은 내용은 같은 전송번호로 재확인합니다.
-  assistantMemoDrafts_.set(id,{text:text,requestId:requestId});
-  const requestSession=sessionToken;
-  const epoch=assistantMemoEpoch_;
-  assistantMemoSending_=true;
-  updateAssistantMemoControls_();
-  assistantMemoFeedback_("메모를 전송하고 있습니다.","");
+  if(cancelMessage.length>500){
+    alert("취소 안내 문구는 500자 이내로 입력해주세요.");
+    return;
+  }
+
+  if(!confirm("이 상담 일정을 취소할까요?\n학생 포털에 입력한 안내 문구가 표시됩니다."))return;
+
   try{
-    const result=await postAssistantMemo_({sessionToken:requestSession,applicationId:id,content:text,requestId:requestId});
-    if(sessionToken!==requestSession || assistantMemoEpoch_!==epoch)return;
-    if(!result.success){
-      assistantMemoFeedback_(result.message || "메모를 저장하지 못했습니다.","error");
+    const result=await api("assistantCounselingCancel",{
+      sessionToken:sessionToken,
+      applicationId:applicationId,
+      cancelMessage:cancelMessage
+    });
+
+    if(!result||!result.success){
+      alert(result&&result.message?result.message:"상담 일정 취소에 실패했습니다.");
       return;
     }
-    if(!result.memo || !result.memo.memoId){
-      throw new Error("메모 저장 결과를 확인하지 못했습니다.");
-    }
-    const current=counselingRows.find(row=>String(row.applicationId)===id);
-    if(current){
-      const memos=Array.isArray(current.assistantMemos)?current.assistantMemos:[];
-      if(!memos.some(memo=>memo.memoId===result.memo.memoId)){
-        current.assistantMemoCount=(Number(current.assistantMemoCount)||memos.length)+1;
-        current.assistantMemos=[result.memo].concat(memos).slice(0,30);
-      }
-      // 저장 성공은 기존 전체 메모 조회 성공과 다릅니다. 기존 조회오류 플래그는 보존합니다.
-    }
-    assistantMemoDrafts_.delete(id);
-    input.value="";
-    renderCounseling();
-    renderAssistantMemoDialog_();
-    assistantMemoFeedback_(result.message || "메모를 저장했습니다.","success");
+
+    alert(result.message||"상담 일정을 취소했습니다.");
+    loadCounseling();
   }catch(error){
-    if(sessionToken!==requestSession || assistantMemoEpoch_!==epoch)return;
-    assistantMemoFeedback_("메모 저장 여부를 확인하지 못했습니다.\n‘메모 새로고침’으로 먼저 확인해주세요. 같은 내용을 다시 보내면 같은 전송번호로 중복을 확인합니다.","error");
-  }finally{
-    if(assistantMemoEpoch_===epoch){
-      assistantMemoSending_=false;
-      updateAssistantMemoControls_();
-    }
+    alert(error&&error.message?error.message:"상담 일정 취소 중 오류가 발생했습니다.");
   }
 }
-
-async function refreshAssistantMemo_(){
-  if(assistantMemoSending_)return;
-  const button=document.getElementById("assistantMemoRefresh");
-  button.disabled=true;
-  assistantMemoFeedback_("최신 메모를 확인하고 있습니다.","");
-  const id=assistantMemoActiveId_, epoch=assistantMemoEpoch_;
-  try{
-    const result=await loadCounseling();
-    if(epoch!==assistantMemoEpoch_ || id!==assistantMemoActiveId_)return;
-    renderAssistantMemoDialog_();
-    const row=assistantMemoSelectedRow_();
-    if(!result || !result.success || !assistantMemoReady_ || !row || row.assistantMemoReadError){
-      assistantMemoFeedback_("최신 메모 조회를 확인하지 못했습니다. 서버 배포 상태와 연결을 확인해주세요.","error");
-    }else{
-      const draft=assistantMemoDrafts_.get(id);
-      const found=draft && (row.assistantMemos || []).some(memo=>memo.requestId===draft.requestId);
-      if(found){
-        assistantMemoDrafts_.delete(id);
-        document.getElementById("assistantMemoContent").value="";
-        updateAssistantMemoControls_();
-      }
-      assistantMemoFeedback_(found?"앞서 전송한 메모가 저장된 것을 확인했습니다.":"최신 메모 내역으로 갱신했습니다.","success");
-    }
-  }finally{
-    if(epoch===assistantMemoEpoch_)updateAssistantMemoControls_();
-  }
-}
-
-document.getElementById("assistantMemoSend").addEventListener("click",sendAssistantMemo_);
-document.getElementById("assistantMemoRefresh").addEventListener("click",refreshAssistantMemo_);
-document.getElementById("assistantMemoClose").addEventListener("click",closeAssistantMemo_);
-document.getElementById("assistantMemoContent").addEventListener("input",updateAssistantMemoControls_);
-document.getElementById("assistantMemoModal").addEventListener("click",function(event){
-  if(event.target===this)closeAssistantMemo_();
-});
-document.getElementById("assistantMemoModal").addEventListener("keydown",function(event){
-  if(event.key==="Escape"){event.preventDefault();closeAssistantMemo_();return;}
-  if(event.key!=="Tab")return;
-  const focusable=Array.from(this.querySelectorAll('button:not(:disabled),textarea:not(:disabled)'));
-  if(!focusable.length){event.preventDefault();return;}
-  const first=focusable[0],last=focusable[focusable.length-1];
-  if(event.shiftKey && document.activeElement===first){event.preventDefault();last.focus();}
-  else if(!event.shiftKey && document.activeElement===last){event.preventDefault();first.focus();}
-});
-
 
 async function decideChange(applicationId,decision){
   if(!confirm("일정 변경 요청을 " + decision + "할까요?")) return;
@@ -2279,6 +2499,14 @@ function renderAssistantCounselHistory_(id,list){
   }
 
   box.innerHTML = list.map(function(x){
+    const myId = String(
+      currentUser && (currentUser.assistantId || currentUser.userId || currentUser.id) || ""
+    );
+    const canDelete =
+      !!x.recordId &&
+      String(x.authorType || "") === "부담임" &&
+      String(x.authorId || "") === myId;
+
     return '<div class="ac-counsel-history-card">' +
       '<div class="ac-counsel-history-top">' +
         '<span>'+esc((x.type || "상담") + " · " + (x.teacherName || "") + " · " + (x.authorType || ""))+'</span>' +
@@ -2286,8 +2514,50 @@ function renderAssistantCounselHistory_(id,list){
       '</div>' +
       '<div class="ac-counsel-history-text">'+esc(x.content || "-")+'</div>' +
       (x.followUp ? '<div class="ac-counsel-history-follow">후속조치: '+esc(x.followUp)+'</div>' : '') +
+      (canDelete
+        ? '<div class="ac-counsel-history-actions">' +
+            '<button type="button" class="ac-counsel-history-delete-btn" data-record-delete="'+esc(x.recordId)+'">삭제</button>' +
+          '</div>'
+        : '') +
     '</div>';
   }).join("");
+
+  box.querySelectorAll("[data-record-delete]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      deleteAssistantCounselRecord_(btn.getAttribute("data-record-delete"));
+    });
+  });
+}
+
+async function deleteAssistantCounselRecord_(recordId){
+  const id=String(recordId||"").trim();
+  if(!id){
+    alert("삭제할 상담기록을 찾을 수 없습니다.");
+    return;
+  }
+
+  if(!confirm("이 상담내용을 삭제할까요?\n삭제 후에는 되돌릴 수 없습니다.")){
+    return;
+  }
+
+  try{
+    const result=await api("assistantCounselRecordDelete",{
+      sessionToken:sessionToken,
+      recordId:id
+    });
+
+    if(!result || !result.success){
+      alert(result && result.message ? result.message : "상담기록을 삭제하지 못했습니다.");
+      return;
+    }
+
+    alert(result.message || "상담기록을 삭제했습니다.");
+    if(selectedAssistantCounselStudent){
+      loadAssistantCounselWorkspace_(selectedAssistantCounselStudent.studentId);
+    }
+  }catch(error){
+    alert(error && error.message ? error.message : "상담기록 삭제 중 오류가 발생했습니다.");
+  }
 }
 
 
