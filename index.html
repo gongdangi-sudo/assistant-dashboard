@@ -156,6 +156,24 @@
       line-height:1.45;
     }
     .course-empty{color:#999;font-size:10px;line-height:1.5}
+
+    /* ===== 학생 카드 > 부담임 상담 예약 이력 ===== */
+    .student-counsel-summary{margin-top:11px;padding-top:10px;border-top:1px solid #eeeaf8}
+    .student-counsel-summary-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+    .student-counsel-summary-title{font-size:10px;font-weight:950;color:#5d2fc0}
+    .student-counsel-summary-count{font-size:9px;font-weight:900;color:#7c6ca8;background:#f3efff;border-radius:999px;padding:3px 7px;white-space:nowrap}
+    .student-counsel-summary-list{display:flex;flex-direction:column;gap:6px}
+    .student-counsel-summary-row{display:grid;grid-template-columns:minmax(105px,auto) minmax(58px,auto) 1fr;gap:7px;align-items:center;padding:8px 9px;border:1px solid #eeeaf8;border-radius:9px;background:#fbfaff;font-size:9px}
+    .student-counsel-summary-datetime{font-weight:900;color:#333;white-space:nowrap}
+    .student-counsel-summary-status{display:inline-flex;align-items:center;justify-content:center;width:max-content;max-width:100%;padding:3px 7px;border-radius:999px;font-size:8px;font-weight:950;white-space:nowrap}
+    .student-counsel-summary-status.wait{background:#fff7e7;color:#b86b00}
+    .student-counsel-summary-status.accept{background:#edf9f1;color:#20844a}
+    .student-counsel-summary-status.change{background:#eef4ff;color:#3467c9}
+    .student-counsel-summary-status.reject{background:#fff1f1;color:#c83c3c}
+    .student-counsel-summary-note{color:#7a808c;line-height:1.4;text-align:right;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .student-counsel-summary-empty{padding:8px 9px;border-radius:9px;background:#f8f8fb;color:#9aa0aa;font-size:9px;line-height:1.45}
+    @media(max-width:560px){.student-counsel-summary-row{grid-template-columns:1fr auto}.student-counsel-summary-note{grid-column:1/-1;text-align:left;white-space:normal}}
+
     .student-count{margin-top:9px;color:#8a8f9c;font-size:10px}
 
     /* 상담 제안 */
@@ -1485,6 +1503,58 @@ function normalizeCourses(student){
   return [];
 }
 
+function assistantStudentCounselRows_(studentId){
+  const sid=String(studentId||"");
+  return (counselingRows||[]).filter(function(item){
+    return String(item.studentId||"")===sid;
+  }).slice().sort(function(a,b){
+    return String(a.proposedDate||"").localeCompare(String(b.proposedDate||"")) ||
+           String(a.proposedTime||"").localeCompare(String(b.proposedTime||""));
+  });
+}
+
+function assistantStudentCounselParticipationText_(status){
+  const map={
+    "제안":"응답대기","참석":"참석","변경승인":"참석예정","일정변경요청":"변경요청",
+    "미참석":"미참석","참여비희망":"상담비희망","예약취소":"예약취소","당일취소":"당일취소",
+    "부담임취소":"일정취소","변경반려":"변경반려","완료":"상담완료"
+  };
+  const s=String(status||"");
+  return map[s]||s||"응답대기";
+}
+
+function assistantStudentCounselStatusClass_(status){
+  const s=String(status||"");
+  if(s==="참석"||s==="변경승인"||s==="완료")return "accept";
+  if(s==="일정변경요청")return "change";
+  if(["미참석","참여비희망","예약취소","당일취소","부담임취소","변경반려"].includes(s))return "reject";
+  return "wait";
+}
+
+function renderStudentCounselingSummary_(student){
+  const rows=assistantStudentCounselRows_(student&&student.studentId);
+  if(!rows.length){
+    return '<div class="student-counsel-summary">'+
+      '<div class="student-counsel-summary-head"><div class="student-counsel-summary-title">📅 부담임 상담 예약</div><span class="student-counsel-summary-count">0건</span></div>'+
+      '<div class="student-counsel-summary-empty">등록된 상담 예약이 없습니다.</div></div>';
+  }
+  return '<div class="student-counsel-summary">'+
+    '<div class="student-counsel-summary-head"><div class="student-counsel-summary-title">📅 부담임 상담 예약</div><span class="student-counsel-summary-count">'+rows.length+'건</span></div>'+
+    '<div class="student-counsel-summary-list">'+rows.map(function(item){
+      const status=String(item.status||"");
+      let note="";
+      if(status==="일정변경요청")note="변경 희망 "+String(item.requestedDate||"-")+" "+String(item.requestedTime||"");
+      else if(item.rejectionReason)note=String(item.rejectionReason||"");
+      else if(status==="완료")note="상담 완료";
+      else if(status==="참석"||status==="변경승인")note="참석 예정";
+      else if(status==="제안")note="학생 응답 대기";
+      return '<div class="student-counsel-summary-row">'+
+        '<div class="student-counsel-summary-datetime">'+esc(item.proposedDate||"-")+" "+esc(item.proposedTime||"-")+'</div>'+
+        '<span class="student-counsel-summary-status '+assistantStudentCounselStatusClass_(status)+'">'+esc(assistantStudentCounselParticipationText_(status))+'</span>'+
+        '<div class="student-counsel-summary-note">'+esc(note)+'</div></div>';
+    }).join("")+'</div></div>';
+}
+
 function renderStudents(){
   const box = document.getElementById("studentList");
   const q = document.getElementById("studentSearch").value.trim().toLowerCase();
@@ -1549,7 +1619,7 @@ function renderStudents(){
         '</div>' +
         '<span class="student-arrow">›</span>' +
       '</div>' +
-      '<div class="course-panel">' + courseHtml + '</div>';
+      '<div class="course-panel">' + courseHtml + renderStudentCounselingSummary_(student) + '</div>';
 
     wrapper.querySelector(".student-main").addEventListener("click", ()=>{
       selectedStudent = student;
@@ -2005,6 +2075,7 @@ async function loadCounseling(){
     }
 
     counselingRows = Array.isArray(result.rows) ? result.rows : [];
+    renderStudents();
     renderCounseling();
     renderStudentCanceledCounseling_();
     renderTimeButtons();
